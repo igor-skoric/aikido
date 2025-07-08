@@ -19036,3 +19036,21 @@ WARNING 2025-07-08 11:45:53,652 basehttp "GET /.well-known/appspecific/com.chrom
 INFO 2025-07-08 11:45:53,752 basehttp "GET /static/css/dist/styles.css?v=1751967953 HTTP/1.1" 200 39819
 INFO 2025-07-08 11:46:18,780 basehttp "GET / HTTP/1.1" 200 21081
 INFO 2025-07-08 11:46:18,836 basehttp "GET /static/css/dist/styles.css?v=1751967978 HTTP/1.1" 200 39819
+INFO 2025-07-08 11:59:09,079 autoreload D:\projects\aikido\aikido\aikido\settings.py changed, reloading.
+INFO 2025-07-08 11:59:10,246 autoreload Watching for file changes with StatReloader
+ERROR 2025-07-08 11:59:10,581 exception Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "D:\projects\aikido\env\scripts\python.py\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\projects\aikido\env\scripts\python.py\Lib\site-packages\django\utils\deprecation.py", line 128, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\projects\aikido\env\scripts\python.py\Lib\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "D:\projects\aikido\env\scripts\python.py\Lib\site-packages\django\http\request.py", line 151, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '127.0.0.1:8000'. You may need to add '127.0.0.1' to ALLOWED_HOSTS.
+WARNING 2025-07-08 11:59:10,710 log Bad Request: /__reload__/events/
+WARNING 2025-07-08 11:59:10,710 basehttp "GET /__reload__/events/ HTTP/1.1" 400 19705
