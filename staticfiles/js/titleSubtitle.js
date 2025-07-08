@@ -28,7 +28,7 @@ document.querySelectorAll('.accordion-toggle').forEach(btn => {
         let parent = panel.parentElement;
         while (parent) {
           if (parent.classList.contains('accordion-panel')) {
-            parent.style.maxHeight =  '500px';
+            parent.style.maxHeight =  '800px';
           }
           parent = parent.parentElement;
         }
