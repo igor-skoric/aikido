@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block title %}Instruktor{% endblock %}
+
+{% block content %}
+
+<div class="max-w-5xl mx-auto px-5 mt-36 ">
+    {% include 'website/components/breadcrumbs.html' %}
+</div>
+<!-- Single post -->
+<section class="max-w-5xl mx-auto bg-white rounded-lg">
+    <div class="aspect-[5/3]">
+        <img src="{{post.main_image.url}}" alt="Instruktor 1"
+             class="w-full h-full object-cover rounded-t-lg">
+    </div>
+    <div class="py-5">
+        <h1 class="text-2xl text-center">{{post.title}}</h1>
+        <p class="text-center">{{post.date}}</p><br>
+        <p class="px-20">{{post.description}}</p>
+    </div>
+</section>
+
+<br>
+
+<!-- Image gallery -->
+<section class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 p-5">
+    {% for image in post.images %}
+    <img src="{{image.image.url}}" class="w-full h-60 object-cover cursor-pointer rounded-sm"
+         onclick="openLightbox({{ forloop.counter0 }})"/>
+    {% endfor %}
+
+</section>
+
+<!-- Full screen -->
+<div id="lightbox" class="fixed inset-0 bg-black bg-opacity-90 hidden items-center justify-center z-50">
+    <button onclick="prevImage()" class="absolute left-4 text-white text-3xl">&#8592;</button>
+    <img id="lightbox-img" class="max-h-[90vh] max-w-[90vw]"/>
+    <button onclick="nextImage()" class="absolute right-4 text-white text-3xl">&#8594;</button>
+    <button onclick="closeLightbox()" class="absolute top-4 right-4 text-white text-2xl">✕</button>
+</div>
+
+<script>
+    const images = [
+      {% for image in post.images %}
+        '{{ image.image.url }}'{% if not forloop.last %},{% endif %}
+      {% endfor %}
+    ];
+
+      let currentIndex = 0;
+
+      function openLightbox(index) {
+        currentIndex = index;
+        document.getElementById('lightbox-img').src = images[index];
+        document.getElementById('lightbox').classList.remove('hidden');
+        document.getElementById('lightbox').classList.add('flex');
+      }
+
+      function closeLightbox() {
+        document.getElementById('lightbox').classList.add('hidden');
+        document.getElementById('lightbox').classList.remove('flex');
+      }
+
+      function nextImage() {
+        currentIndex = (currentIndex + 1) % images.length;
+        document.getElementById('lightbox-img').src = images[currentIndex];
+      }
+
+      function prevImage() {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        document.getElementById('lightbox-img').src = images[currentIndex];
+      }
+</script>
+
+{% endblock %}
+
+

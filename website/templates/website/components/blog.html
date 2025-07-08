@@ -1,0 +1,24 @@
+{% load static %}
+
+{% for post in blog %}
+
+<a href="{% url 'post' post.slug %}">
+    <!-- Kartica 1 -->
+    <div class="bg-white rounded-2xl shadow-md overflow-hidden transition-transform duration-300 transform hover:-translate-y-2">
+        <div class="aspect-[4/3] w-full">
+            <img src="{{post.main_image.url}}" alt="Instruktor 1" class="w-full h-64 object-cover">
+        </div>
+        <div class="relative p-4">
+            <div class="absolute -top-6 right-2 bg-blue-600 px-2 py-1 rounded-sm">
+                <p class="text-white text-sm">{{post.date}}</p>
+            </div>
+            <h2 class="text-xl font-semibold text-gray-800">{{post.title}}</h2>
+            <div class="flex gap-2 items-center">
+                <hr class="my-2 border-gray-300 w-[40%] md:w-[50%]">
+            </div>
+            <p class="text-gray-600 text-sm mb-2">{{post.description | slice:100}}</p>
+        </div>
+    </div>
+</a>
+
+{% endfor %}

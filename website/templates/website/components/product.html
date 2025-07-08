@@ -1,0 +1,20 @@
+{% load static %}
+
+<!-- Kartica 1 -->
+
+{% for product in products %}
+
+<a href="{% url 'product' product.slug  %}">
+    <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 transform hover:-translate-y-2">
+        <div class="aspect-[4/3] w-full">
+            <img src="{{ product.main_image.url }}" alt="Instruktor 1" class="w-full h-64 object-cover">
+        </div>
+        <div class="relative p-2">
+            <h2 class="text-xl text-center font-semibold text-gray-800">{{ product.name }}</h2>
+            <p class="font-semibold text-gray-600 text-center mb-2">{{ product.price }} rsd</p>
+        </div>
+    </div>
+</a>
+
+{% endfor %}
+

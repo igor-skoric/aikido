@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block title %}Instruktor{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto px-5 mt-36 ">
+    {% include 'website/components/breadcrumbs.html' %}
+</div>
+<section class="px-2 max-w-5xl mx-auto">
+    <div class="bg-white shadow-lg rounded-lg p-6 grid grid-cols-1 md:grid-cols-[1fr_3fr] gap-4">
+        <!-- Leva kolona -->
+        <div class="">
+            <div class="shadow-lg rounded-lg p-5">
+                <h1 class="pb-2 text-xl text-center">Kategorije</h1>
+                <hr>
+                <br>
+                <form method="get" class="space-y-4">
+                    <div class="flex flex-col items-center">
+                        <label class="flex items-center justify-between w-full cursor-pointer space-x-10">
+                            <span>Svi proizvodi</span>
+                            <input type="radio" name="category" value="" class="peer hidden" {% if not active_category %} checked {% endif %} onchange="this.form.submit()">
+                            <div class="w-5 h-5 rounded-full border-2 border-gray-400 peer-checked:border-blue-500 peer-checked:bg-blue-500 transition"></div>
+                        </label>
+                        {% for category in categories %}
+                        <label class="flex items-center justify-between w-full cursor-pointer space-x-10">
+                            <span>{{category.display}}</span>
+                            <input type="radio" name="category" value="{{category.slug}}" class="peer hidden" {% if active_category == category.slug %} checked {% endif %} onchange="this.form.submit()">
+                            <div class="w-5 h-5 rounded-full border-2 border-gray-400 peer-checked:border-blue-500 peer-checked:bg-blue-500 transition"></div>
+                        </label>
+                        {% endfor %}
+
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+        <!-- Desna kolona -->
+        <div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 mx-auto max-w-6xl ">
+                {% include 'website/components/product.html' with products=products %}
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}
+

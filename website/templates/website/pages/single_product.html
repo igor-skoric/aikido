@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block title %}Instruktor{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto px-5 mt-36 ">
+    {% include 'website/components/breadcrumbs.html' %}
+</div>
+<section class="max-w-5xl mx-auto">
+    <div class=" bg-white shadow-lg rounded-lg p-6 grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-4">
+        <!-- Leva kolona -->
+        <div class="flex md:flex-row flex-col gap-2">
+
+            <div class="flex md:flex-col gap-2  order-2 md:order-1 md:w-[100px] md:h-[400px] overflow-y-auto custom-scrollbar">
+                {% for image in product.images %}
+
+                <img src="{{image.image.url}}"
+                     class="object-cover cursor-pointer rounded  md:w-full w-[90%]" onclick="changeImage(this)">
+                {% endfor %}
+
+            </div>
+            <!-- Glavna slika desno od sporednih -->
+            <div class="order-1 md:order-2 w-full overflow-hidden " onmousemove="zoom(event)"
+                 onmouseleave="resetZoom()">
+                <img id="mainImage" src="{{product.main_image.url}}" alt="Instruktor 1"
+                     class="object-cover cursor-pointer rounded transition-transform duration-300 ease-in-out">
+            </div>
+        </div>
+        <!-- Desna kolona -->
+
+        <div class="">
+            <h1 class="text-4xl">{{product.name}}</h1><Br>
+            <p>SKU: BMA 113-115</p>
+            <br>
+            <hr>
+            <br>
+            <p>{{product.additional_info}}</p>
+            <br>
+            <div>
+                <button class="accordion-toggle w-full text-left font-semibold text-lg flex shadow p-2 rounded-xl justify-between items-center">
+                    <span>DODATNE INFORMACIJE</span>
+                    <span class="icon">+</span>
+                </button>
+                <div class="accordion-panel overflow-hidden transition-all duration-300 ease-in-out max-h-0">
+                    <ul class="p-4 space-y-2">
+                        <li>
+                            <button class="accordion-toggle w-full text-left {% if subsection.yacht_details.all %} border border-b {% endif %}  flex justify-between items-center">
+                                <span>CONTACT US FOR PRE ORDER Delivery time: 1 - 3 MONTHS Description: Elegant slim fit lace jumpsuit, with a plunging V neckline and back like, embroidered with beads featuring feathered puffy sleeves. Details: Model is wearing size 34 Europe number. The model’s height: 178/ 70.0, bust: 83 cm/ 32.6, waist: 59 cm/23.2, hips: 89 cm / 35.0</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <br>
+            <p class="text-xl font-bold">{{product.price}} rsd</p>
+            <br>
+
+            <button class="text-white py-1 px-6 bg-blue-600 rounded-md">PORUČI</button>
+        </div>
+
+
+    </div>
+</section>
+<br><br>
+<!-- Sekcija ostalih proizvoda iz kategorije -->
+<section class="relative w-full mb-20 bg-white p-5">
+    <h1 class="text-center text-4xl my-20">Povezani proizvodi</h1>
+
+    <!-- Slider kontejner -->
+    <div id="slider" class="flex overflow-x-auto scroll-smooth scrollbar-hide space-x-2 max-h-[500px]">
+
+        {% for related_product in related_products %}
+        <div class="w-1/2 md:w-1/3 flex-shrink-0">
+            <a href="{% url 'product' related_product.slug %}">
+                <img src="{{related_product.main_image.url}}" class=" object-cover w-full h-full"/>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    <!-- Dugme levo -->
+    <button onclick="slide('left')"
+            class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/70 rounded-full p-2 shadow z-10">
+        ←
+    </button>
+    <!-- Dugme desno -->
+    <button onclick="slide('right')"
+            class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/70 rounded-full p-2 shadow z-10">
+        →
+    </button>
+</section>
+
+
+<script src="{% static 'js/slider.js'%}"></script>
+<script src="{% static 'js/imgZoom.js' %}"></script>
+
+<script>
+    //Glavna slika i sporedne
+const thumbnails = document.querySelectorAll('div > img[onclick="changeImage(this)"]');
+const mainImage = document.getElementById('mainImage');
+const fullscreenOverlay = document.getElementById('fullscreenOverlay');
+const fullscreenImage = document.getElementById('fullscreenImage');
+
+let currentIndex = 0;
+let imageSources = Array.from(thumbnails).map(img => img.src);
+
+function changeImage(el) {
+  mainImage.src = el.src;
+  currentIndex = imageSources.indexOf(el.src);
+}
+</script>
+{% endblock %}
+

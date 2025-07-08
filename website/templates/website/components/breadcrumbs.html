@@ -1,0 +1,17 @@
+{% load static %}
+
+
+<div class="flex text-gray-300 py-2 px-4 bg-white rounded-xl shadow mb-2" aria-label="breadcrumb">
+    <div class="">
+        <ul class="mx-auto max-5xl flex items-center space-x-2 ">
+            {% for name, url in breadcrumbs %}
+                <li class="flex items-center">
+                    <a href="{{ url }}" class="text-gray-600 hover:text-blue-800">{{ name }}</a>
+                    {% if not forloop.last %}
+                    <span class="mx-2 text-gray-400">/</span>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

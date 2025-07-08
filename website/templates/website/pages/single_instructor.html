@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block title %}Instruktor{% endblock %}
+
+{% block content %}
+
+<div class="max-w-5xl mx-auto px-5 mt-36 ">
+    {% include 'website/components/breadcrumbs.html' %}
+</div>
+<div class="max-w-5xl mx-auto">
+    <div class="bg-white shadow-lg rounded-2xl p-6 grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-8">
+        <!-- Leva kolona -->
+        <div>
+            <img src="{{instructor.photo.url}}" alt="Instruktor 1" class="w-full object-cover rounded-xl">
+        </div>
+        <!-- Desna kolona -->
+        <div>
+            <h1 class="text-4xl">{{instructor.name}}</h1>
+            <i class="font-semibold">{{instructor.get_title_display}}</i>
+            <i>{{instructor.get_belt_rank_display}}</i>
+            <br>
+            <br>
+            <p>{{instructor.short_description}}</p>
+            <br>
+            <p class="">{{instructor.description|safe}}
+            </p>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
+

@@ -1,0 +1,41 @@
+{% load static %}
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Aikido</title>
+
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Uključi Alpine.js u <head> ili pre zatvaranja </body> -->
+
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <!-- U head sekciji -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Cormorant+Garamond&family=Cinzel&family=Great+Vibes&display=swap"
+          rel="stylesheet">
+    <link href="{% static 'css/style.css' %}"
+          rel="stylesheet">
+    {% tailwind_css %}
+</head>
+
+<body class=" bg-cover bg-no-repeat bg-center bg-fixed" style="background-image: url('{% static 'img/website/bg.jpg' %}');">
+
+
+{% include 'header.html' %}
+
+{% block content %}
+{% endblock %}
+
+{% include 'footer.html' %}
+
+
+</body>
+</html>
+
+<script src="{% static 'js/titleSubtitle.js' %}"></script>

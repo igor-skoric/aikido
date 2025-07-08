@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block title %}Index Page{% endblock %}
+
+{% block content %}
+
+<!--Hero slide Component-->
+{% include 'website/components/hero.html' %}
+
+<section class="py-24">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+        <h2 class="text-4xl font-bold text-gray-800 mb-4">
+            Zašto baš Realni Aikido?
+        </h2>
+        <p class="text-lg text-gray-600">
+            Efikasna samoodbrana, mentalna snaga i samopouzdanje – za decu i odrasle. </p>
+    </div>
+</section>
+
+<section class="py-18 ">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 text-center">
+
+            <!-- Kolona 1 -->
+            <div class="p-10">
+                <img src="{% static 'img/icons/stash_shield-user-light.png' %}" alt="Ikonica 1"
+                     class="mx-auto mb-4 w-20 h-20 object-contain">
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Samopouzdanje</h3>
+                <p class="text-gray-600 text-sm">Trening jača veru u sebe i razvija sigurnost.</p>
+            </div>
+
+            <!-- Kolona 2 -->
+            <div class="p-10 bg-[#FF0B0B]">
+                <img src="{% static 'img/icons/ph_user-focus.png' %}" alt="Ikonica 2"
+                     class="mx-auto mb-4 w-20 h-20 object-contain">
+                <h3 class="text-xl font-semibold text-white mb-2">Disiplina i fokus</h3>
+                <p class="text-white text-sm">Veštine koje pomažu i u školi, i na poslu, i u životu.</p>
+            </div>
+
+            <!-- Kolona 3 -->
+            <div class="p-10">
+                <img src="{% static 'img/icons/fa6-solid_hand-fist.png' %}" alt="Ikonica 3"
+                     class="mx-auto mb-4 w-20 h-20 object-contain">
+                <h3 class="text-xl font-semibold text-black/80 mb-2">Praktična samoodbrana</h3>
+                <p class="text-black/80 text-sm">Tehnike koje funkcionišu u stvarnim situacijama.</p>
+            </div>
+
+            <!-- Kolona 4 -->
+            <div class="p-10">
+                <img src="{% static 'img/icons/icon-park-solid_brain.png' %}" alt="Ikonica 4"
+                     class="mx-auto mb-4 w-20 h-20 object-contain">
+                <h3 class="text-xl font-semibold text-black/80 mb-2">Fizička i mentalna snaga</h3>
+                <p class="text-black/80 text-sm">Trening tela i uma kroz pokret i kontrolu.</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<br><br><br><br>
+
+<section class="w-full bg-black/80 text-white">
+    <div class="max-w-7xl mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-2 items-center gap-12">
+
+        <!-- Leva strana -->
+        <div class="flex flex-col items-center md:items-start text-center md:text-left space-y-6">
+            <div class="flex gap-2 flex-col md:flex-row items-center">
+                <!-- Ikonica -->
+                <img src="{% static 'img/icons/game-icons_kimono.png' %}" alt="Ikonica" class="w-32 h-32">
+
+                <!-- Naslov -->
+                <h2 class="text-3xl md:text-4xl font-bold max-w-lg">Naši programi su prilagođeni svim uzrastima</h2>
+            </div>
+
+            <!-- Tekst -->
+            <p class="text-gray-300 max-w-md">
+                Pronađi najbližu grupu u Beogradu i priključi se treningu koji ti najviše odgovara. Svaka grupa ima svog
+                trenera, termine i lokaciju prilagođene tvojim potrebama.
+            </p>
+        </div>
+
+        <!-- Desna strana -->
+        <div>
+            <img src="{% static 'img/website/section2.jpg' %}" alt="Slika"
+                 class="w-full rounded-lg shadow-lg object-cover">
+        </div>
+
+    </div>
+</section>
+
+<section class="bg-black/80 text-white py-36">
+    <div class="relative bg-gray-100 py-24 px-6 max-w-[500px] mx-auto rounded-xl ">
+
+        <!-- Ikonica na vrhu centra -->
+        <div class="absolute -top-12 left-1/2 transform -translate-x-1/2">
+            <img src="{% static 'img/icons/ix_location-filled.png' %}" alt="Ikonica"
+                 class="w-24 h-24 rounded-full shadow-lg bg-white p-2">
+        </div>
+
+        <!-- Sadržaj sekcije -->
+        <div class="max-w-[500px] mx-auto text-center space-y-6">
+            <h2 class="text-3xl font-bold text-gray-900">Treniraj sa nama</h2>
+            <p class="text-gray-600">Pronađi najbližu grupu u Beogradu i priključi se treningu koji ti najviše odgovara.
+                Svaka grupa ima svog trenera, termine i lokaciju prilagođene tvojim potrebama.</p>
+            <a href="{% url 'locations' %}"
+               class="inline-block bg-blue-600 text-white px-6 py-3 rounded-xl shadow hover:bg-blue-700 transition">
+                Saznaj više
+            </a>
+        </div>
+    </div>
+</section>
+
+
+<br><br>
+<br><br>
+
+
+<section class="py-24 bg-gray-100/80 rounded-xl">
+    <div class="px-6 text-center mx-auto max-w-3xl">
+        <h2 class="text-4xl font-bold text-gray-800 mb-4">
+            Naši instruktori
+        </h2>
+        <p class="text-lg text-gray-600 ">
+            Naš tim čine licencirani instruktori sa višegodišnjim iskustvom u radu sa decom, tinejdžerima i odraslima. 
+            Posvećeni su prenošenju znanja kroz bezbedan, prilagođen i motivišući pristup svakom vežbaču. </p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-6   mx-auto max-w-6xl ">
+        {% for instructor in instructors %}
+            {% include 'website/components/instructors.html' with instructor=instructor %}
+        {% endfor %}
+    </div>
+
+</section>
+
+
+{% endblock %}
+
