@@ -1,50 +1,43 @@
 {% extends 'base.html' %}
-
 {% load static %}
-{% block title %}Instruktor{% endblock %}
+{% block title %}Prodavnica — Realni Aikido{% endblock %}
 
 {% block content %}
-<div class="max-w-5xl mx-auto px-5 mt-36 ">
+<div class="max-w-5xl mx-auto px-4 sm:px-5 pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-16">
     {% include 'website/components/breadcrumbs.html' %}
-</div>
-<section class="px-2 max-w-5xl mx-auto">
-    <div class="bg-white shadow-lg rounded-lg p-6 grid grid-cols-1 md:grid-cols-[1fr_3fr] gap-4">
-        <!-- Leva kolona -->
-        <div class="">
-            <div class="shadow-lg rounded-lg p-5">
-                <h1 class="pb-2 text-xl text-center">Kategorije</h1>
-                <hr>
-                <br>
-                <form method="get" class="space-y-4">
-                    <div class="flex flex-col items-center">
-                        <label class="flex items-center justify-between w-full cursor-pointer space-x-10">
-                            <span>Svi proizvodi</span>
-                            <input type="radio" name="category" value="" class="peer hidden" {% if not active_category %} checked {% endif %} onchange="this.form.submit()">
-                            <div class="w-5 h-5 rounded-full border-2 border-gray-400 peer-checked:border-blue-500 peer-checked:bg-blue-500 transition"></div>
-                        </label>
-                        {% for category in categories %}
-                        <label class="flex items-center justify-between w-full cursor-pointer space-x-10">
-                            <span>{{category.display}}</span>
-                            <input type="radio" name="category" value="{{category.slug}}" class="peer hidden" {% if active_category == category.slug %} checked {% endif %} onchange="this.form.submit()">
-                            <div class="w-5 h-5 rounded-full border-2 border-gray-400 peer-checked:border-blue-500 peer-checked:bg-blue-500 transition"></div>
-                        </label>
-                        {% endfor %}
+    <header class="mb-6 sm:mb-10 reveal">
+        <h1 class="font-display text-3xl sm:text-4xl md:text-5xl text-ink">Prodavnica</h1>
+        <p class="mt-2 text-base sm:text-lg text-muted">Oprema za trening.</p>
+    </header>
 
-                    </div>
-                </form>
+    <div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-5 sm:gap-8">
+        {# Mobile: horizontal chips #}
+        <aside class="reveal md:bg-white md:rounded-brand md:shadow-sm md:ring-1 md:ring-stone-200 md:p-5 md:h-fit">
+            <h2 class="font-display text-lg mb-3 hidden md:block">Kategorije</h2>
+            <form method="get">
+                <div class="flex md:flex-col gap-2 overflow-x-auto scrollbar-hide pb-1 md:pb-0 -mx-1 px-1">
+                    <label class="shrink-0 md:w-full flex items-center justify-between gap-3 cursor-pointer py-2 px-3 md:px-0 rounded-full md:rounded-none ring-1 md:ring-0 ring-stone-200 bg-white md:bg-transparent text-sm">
+                        <span>Svi proizvodi</span>
+                        <input type="radio" name="category" value="" class="text-brand-blue focus:ring-brand-blue"
+                               {% if not active_category %}checked{% endif %} onchange="this.form.submit()">
+                    </label>
+                    {% for category in categories %}
+                    <label class="shrink-0 md:w-full flex items-center justify-between gap-3 cursor-pointer py-2 px-3 md:px-0 rounded-full md:rounded-none ring-1 md:ring-0 ring-stone-200 bg-white md:bg-transparent text-sm
+                        {% if active_category == category.slug %}ring-brand-blue text-brand-blue font-semibold{% endif %}">
+                        <span>{{ category.display }}</span>
+                        <input type="radio" name="category" value="{{ category.slug }}"
+                               class="text-brand-blue focus:ring-brand-blue"
+                               {% if active_category == category.slug %}checked{% endif %}
+                               onchange="this.form.submit()">
+                    </label>
+                    {% endfor %}
+                </div>
+            </form>
+        </aside>
 
-
-            </div>
-        </div>
-        <!-- Desna kolona -->
-        <div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 mx-auto max-w-6xl ">
-                {% include 'website/components/product.html' with products=products %}
-            </div>
+        <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+            {% include 'website/components/product.html' with products=products %}
         </div>
     </div>
-</section>
-
-
+</div>
 {% endblock %}
-

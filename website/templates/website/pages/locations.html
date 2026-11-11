@@ -1,380 +1,153 @@
 {% extends 'base.html' %}
-
 {% load static %}
-{% block title %}Lokacije{% endblock %}
+{% block title %}Lokacije treninga — Realni Aikido Vokić Beograd{% endblock %}
+{% block meta_description %}Pronađi lokacije treninga Realnog Aikidoa Vokić u Beogradu: adrese, termini i kontakti po dojoima.{% endblock %}
+{% block og_title %}Lokacije treninga — Realni Aikido Vokić{% endblock %}
+{% block og_description %}Adrese i termini treninga Realnog Aikidoa u Beogradu.{% endblock %}
 
 {% block content %}
+<section class="locations-page" aria-labelledby="locations-page-heading">
+    <div class="locations-page__container">
+        <header class="locations-page__intro reveal">
+            <nav aria-label="Breadcrumb" class="locations-page__crumbs">
+                <ol>
+                    <li>
+                        <a href="{% url 'home' %}">Početna</a>
+                    </li>
+                    <li aria-hidden="true">/</li>
+                    <li aria-current="page">Lokacije</li>
+                </ol>
+            </nav>
 
-<div class="max-w-5xl mx-auto px-5 mt-36 ">
-    {% include 'website/components/breadcrumbs.html' %}
-</div>
-<section class="mx-auto max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-5 px-2">
-
-    <div class="bg-white rounded-xl shadow-md p-6 space-y-6 ">
-        <!-- Lokacija -->
-        <div class="text-center">
-            <div class="flex items-center justify-center space-x-2">
-                <span class="text-red-500 text-2xl">                        <img
-                        src="{% static 'img/icons/ix_location-filled.png' %}" alt="Ikonica 1"
-                        class="mx-auto w-10 h-10 object-contain"></span>
-                <h2 class="text-2xl font-bold text-blue-700">Zemun</h2>
-            </div>
-            <p class="text-gray-700">Ugrinovačka 206, Beograd 11080</p>
-        </div>
-        <hr>
-        <!-- Grupe -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <!-- Mlađa grupa -->
-            <div class="bg-gray-50 rounded-lg shadow p-4 space-y-2">
-                <div class="flex items-center space-x-2">
-                    <span class="text-red-500 text-xl">
-                        <img src="{% static 'img/icons/fa-solid_child.png' %}" alt="Ikonica 1"
-                             class="mx-auto w-5 h-5 object-contain">
-                    </span>
-                    <h3 class="text-blue-700 font-semibold text-lg">Mlađa grupa</h3>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <span class="text-xl"><img src="{% static 'img/icons/lets-icons_date-range-fill.png' %}"
-                                               alt="Ikonica 1" class="mx-auto w-5 h-5 object-contain"></span>
-                    <p>Utorak i Četvrtak</p>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <span class="text-xl"><img src="{% static 'img/icons/carbon_time-filled.png' %}" alt="Ikonica 1"
-                                               class="mx-auto w-5 h-5 object-contain"></span></span>
-                    <p>19:30 DO 20:30</p>
-                </div>
+            <div class="locations-page__eyebrow">
+                <span class="locations-page__eyebrow-line" aria-hidden="true"></span>
+                <p>Realni Aikido / Beograd</p>
             </div>
 
-            <!-- Starija grupa -->
-            <div class="bg-gray-50 rounded-lg shadow p-4 space-y-2">
-                <div class="flex items-center space-x-2">
-                    <span class="text-red-500 text-xl">
-                        <img src="{% static 'img/icons/ion_man.png' %}" alt="Ikonica 1"
-                             class="mx-auto w-5 h-5 object-contain">
-                    </span>
-                    <h3 class="text-blue-700 font-semibold text-lg">Starija grupa</h3>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <span class="text-xl"><img src="{% static 'img/icons/lets-icons_date-range-fill.png' %}"
-                                               alt="Ikonica 1" class="mx-auto w-5 h-5 object-contain"></span>
-                    <p>Utorak i Četvrtak</p>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <span class="text-xl"><img src="{% static 'img/icons/carbon_time-filled.png' %}" alt="Ikonica 1"
-                                               class="mx-auto w-5 h-5 object-contain"></span></span>
-                    <p>20:30 DO 21:30</p>
-                </div>
-            </div>
-        </div>
+            <h1 id="locations-page-heading" class="locations-page__heading font-display">
+                Lokacije treninga
+            </h1>
+            <p class="locations-page__lead font-body">
+                Izaberi lokaciju i pogledaj termine treninga.
+            </p>
+        </header>
 
-        <!-- Trener i Kontakt -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <!-- Trener -->
-            <div class="bg-gray-50 rounded-lg shadow p-4">
-                <div class="flex items-center space-x-2 mb-2">
-                    <span class="text-red-500 text-xl">
-                        <img src="{% static 'img/icons/devicon-plain_karatelabs.png' %}" alt="Ikonica 1" class="mx-auto w-8 h-8 object-contain"></span>
-                    <h3 class="text-blue-700 font-semibold text-lg">Trener</h3>
-                </div>
-                <p class="text-gray-800">Aleksandar Petrović</p>
-                <p class="text-gray-800">Crni pojas 2. Dan</p>
+        {% if locations %}
+        <div class="locations-page__layout reveal"
+             x-data="{
+                selected: {{ locations.0.id }},
+                count: {{ locations|length }},
+                select(id) {
+                    this.selected = Number(id);
+                }
+             }">
+
+            {# —— Mobile select (only when multiple halls) —— #}
+            <div class="locations-page__mobile-select" x-show="count > 1" x-cloak>
+                <label for="locations-select" class="locations-page__select-label">Izaberi lokaciju</label>
+                <select id="locations-select"
+                        class="locations-page__select"
+                        :value="String(selected)"
+                        @change="select($event.target.value)">
+                    {% for location in locations %}
+                    <option value="{{ location.id }}">{{ location.name }} — {{ location.address }}</option>
+                    {% endfor %}
+                </select>
             </div>
 
-            <!-- Kontakt -->
-            <div class="bg-gray-50 rounded-lg shadow p-4">
-                <div class="flex items-center space-x-2 mb-2">
-                    <span class="text-red-500 text-xl"><img src="{% static 'img/icons/ic_baseline-phone.png' %}" alt="Ikonica 1" class="mx-auto w-8 h-8 object-contain"></span></span>
-                    <h3 class="text-blue-700 font-semibold text-lg">Kontakt</h3>
-                </div>
-                <p class="text-black font-semibold underline">069/2153419</p>
-            </div>
-        </div>
+            {# —— Desktop / tablet list —— #}
+            <aside class="locations-page__sidebar" aria-label="Izaberi lokaciju">
+                <h2 class="locations-page__sidebar-title font-display">Izaberi lokaciju</h2>
+                <ul class="locations-page__list" role="listbox" aria-label="Lokacije">
+                    {% for location in locations %}
+                    <li role="none">
+                        <button type="button"
+                                class="locations-page__item"
+                                role="option"
+                                :aria-selected="(selected === {{ location.id }}).toString()"
+                                :class="selected === {{ location.id }} ? 'is-active' : ''"
+                                @click="select({{ location.id }})"
+                                @keydown.enter.prevent="select({{ location.id }})"
+                                @keydown.space.prevent="select({{ location.id }})">
+                            <span class="locations-page__item-name font-display">{{ location.name }}</span>
+                            <span class="locations-page__item-address font-body">{{ location.address }}</span>
+                        </button>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </aside>
 
-        <!-- Mapa (placeholder) -->
-        <div class="rounded-lg overflow-hidden">
-            <iframe
-                    class="w-full h-64"
-                    src="https://www.google.com/maps?q=Volcano%20Gym%2C%20Beograd&output=embed"
-                    allowfullscreen=""
-                    loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
-        </div>
-    </div>
-    <div class="bg-white rounded-xl shadow-md p-6 space-y-6 ">
-        <!-- Lokacija -->
-        <div class="text-center">
-            <div class="flex items-center justify-center space-x-2">
-                <span class="text-red-500 text-2xl">                        <img
-                        src="{% static 'img/icons/ix_location-filled.png' %}" alt="Ikonica 1"
-                        class="mx-auto w-10 h-10 object-contain"></span>
-                <h2 class="text-2xl font-bold text-blue-700">Zemun</h2>
-            </div>
-            <p class="text-gray-700">Ugrinovačka 206, Beograd 11080</p>
-        </div>
-        <hr>
-        <!-- Grupe -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <!-- Mlađa grupa -->
-            <div class="bg-gray-50 rounded-lg shadow p-4 space-y-2">
-                <div class="flex items-center space-x-2">
-                    <span class="text-red-500 text-xl">
-                        <img src="{% static 'img/icons/fa-solid_child.png' %}" alt="Ikonica 1"
-                             class="mx-auto w-5 h-5 object-contain">
-                    </span>
-                    <h3 class="text-blue-700 font-semibold text-lg">Mlađa grupa</h3>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <span class="text-xl"><img src="{% static 'img/icons/lets-icons_date-range-fill.png' %}"
-                                               alt="Ikonica 1" class="mx-auto w-5 h-5 object-contain"></span>
-                    <p>Utorak i Četvrtak</p>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <span class="text-xl"><img src="{% static 'img/icons/carbon_time-filled.png' %}" alt="Ikonica 1"
-                                               class="mx-auto w-5 h-5 object-contain"></span></span>
-                    <p>19:30 DO 20:30</p>
-                </div>
-            </div>
+            {# —— Detail panel —— #}
+            <div class="locations-page__panel-wrap">
+                {% for location in locations %}
+                <article class="locations-page__panel"
+                         x-show="selected === {{ location.id }}"
+                         x-cloak
+                         {% if forloop.first %}style="display:block"{% endif %}
+                         aria-labelledby="location-title-{{ location.id }}">
+                    <h2 id="location-title-{{ location.id }}" class="locations-page__panel-title font-display">
+                        {{ location.name }}
+                    </h2>
 
-            <!-- Starija grupa -->
-            <div class="bg-gray-50 rounded-lg shadow p-4 space-y-2">
-                <div class="flex items-center space-x-2">
-                    <span class="text-red-500 text-xl">
-                        <img src="{% static 'img/icons/ion_man.png' %}" alt="Ikonica 1"
-                             class="mx-auto w-5 h-5 object-contain">
-                    </span>
-                    <h3 class="text-blue-700 font-semibold text-lg">Starija grupa</h3>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <span class="text-xl"><img src="{% static 'img/icons/lets-icons_date-range-fill.png' %}"
-                                               alt="Ikonica 1" class="mx-auto w-5 h-5 object-contain"></span>
-                    <p>Utorak i Četvrtak</p>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <span class="text-xl"><img src="{% static 'img/icons/carbon_time-filled.png' %}" alt="Ikonica 1"
-                                               class="mx-auto w-5 h-5 object-contain"></span></span>
-                    <p>20:30 DO 21:30</p>
-                </div>
+                    {% if location.address %}
+                    <p class="locations-page__panel-address font-body">{{ location.address }}</p>
+                    {% endif %}
+
+                    {% if location.groups.all %}
+                    <div class="locations-page__groups">
+                        <h3 class="locations-page__section-label font-display">Termini</h3>
+                        <ul class="locations-page__schedule" role="list">
+                            {% for group in location.groups.all %}
+                            <li class="locations-page__schedule-row">
+                                <span class="locations-page__group-label font-display">{{ group.label }}</span>
+                                <span class="locations-page__group-meta font-body">
+                                    {% if group.days %}<span>{{ group.days }}</span>{% endif %}
+                                    {% if group.days and group.time_range %}<span aria-hidden="true">·</span>{% endif %}
+                                    {% if group.time_range %}<span>{{ group.time_range }}</span>{% endif %}
+                                </span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+
+                    {% if location.trainer_name or location.trainer_belt %}
+                    <div class="locations-page__trainer">
+                        <h3 class="locations-page__section-label font-display">Trener</h3>
+                        {% if location.trainer_name %}
+                        <p class="locations-page__trainer-name font-body">{{ location.trainer_name }}</p>
+                        {% endif %}
+                        {% if location.trainer_belt %}
+                        <p class="locations-page__trainer-belt font-body">{{ location.trainer_belt }}</p>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+
+                    {% if location.maps_url or location.tel_href %}
+                    <div class="locations-page__actions">
+                        {% if location.maps_url %}
+                        <a href="{{ location.maps_url }}"
+                           class="locations-page__btn locations-page__btn--primary"
+                           target="_blank"
+                           rel="noopener noreferrer">
+                            Otvori u Google Maps
+                        </a>
+                        {% endif %}
+                        {% if location.tel_href %}
+                        <a href="{{ location.tel_href }}"
+                           class="locations-page__btn locations-page__btn--secondary">
+                            Pozovi trenera
+                        </a>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </article>
+                {% endfor %}
             </div>
         </div>
-
-        <!-- Trener i Kontakt -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <!-- Trener -->
-            <div class="bg-gray-50 rounded-lg shadow p-4">
-                <div class="flex items-center space-x-2 mb-2">
-                    <span class="text-red-500 text-xl">
-                        <img src="{% static 'img/icons/devicon-plain_karatelabs.png' %}" alt="Ikonica 1" class="mx-auto w-8 h-8 object-contain"></span>
-                    <h3 class="text-blue-700 font-semibold text-lg">Trener</h3>
-                </div>
-                <p class="text-gray-800">Aleksandar Petrović</p>
-                <p class="text-gray-800">Crni pojas 2. Dan</p>
-            </div>
-
-            <!-- Kontakt -->
-            <div class="bg-gray-50 rounded-lg shadow p-4">
-                <div class="flex items-center space-x-2 mb-2">
-                    <span class="text-red-500 text-xl"><img src="{% static 'img/icons/ic_baseline-phone.png' %}" alt="Ikonica 1" class="mx-auto w-8 h-8 object-contain"></span></span>
-                    <h3 class="text-blue-700 font-semibold text-lg">Kontakt</h3>
-                </div>
-                <p class="text-black font-semibold underline">069/2153419</p>
-            </div>
-        </div>
-
-        <!-- Mapa (placeholder) -->
-        <div class="rounded-lg overflow-hidden">
-            <iframe
-                    class="w-full h-64"
-                    src="https://www.google.com/maps?q=Volcano%20Gym%2C%20Beograd&output=embed"
-                    allowfullscreen=""
-                    loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
-        </div>
-    </div>
-        <div class="bg-white rounded-xl shadow-md p-6 space-y-6 ">
-        <!-- Lokacija -->
-        <div class="text-center">
-            <div class="flex items-center justify-center space-x-2">
-                <span class="text-red-500 text-2xl">                        <img
-                        src="{% static 'img/icons/ix_location-filled.png' %}" alt="Ikonica 1"
-                        class="mx-auto w-10 h-10 object-contain"></span>
-                <h2 class="text-2xl font-bold text-blue-700">Zemun</h2>
-            </div>
-            <p class="text-gray-700">Ugrinovačka 206, Beograd 11080</p>
-        </div>
-        <hr>
-        <!-- Grupe -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <!-- Mlađa grupa -->
-            <div class="bg-gray-50 rounded-lg shadow p-4 space-y-2">
-                <div class="flex items-center space-x-2">
-                    <span class="text-red-500 text-xl">
-                        <img src="{% static 'img/icons/fa-solid_child.png' %}" alt="Ikonica 1"
-                             class="mx-auto w-5 h-5 object-contain">
-                    </span>
-                    <h3 class="text-blue-700 font-semibold text-lg">Mlađa grupa</h3>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <span class="text-xl"><img src="{% static 'img/icons/lets-icons_date-range-fill.png' %}"
-                                               alt="Ikonica 1" class="mx-auto w-5 h-5 object-contain"></span>
-                    <p>Utorak i Četvrtak</p>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <span class="text-xl"><img src="{% static 'img/icons/carbon_time-filled.png' %}" alt="Ikonica 1"
-                                               class="mx-auto w-5 h-5 object-contain"></span></span>
-                    <p>19:30 DO 20:30</p>
-                </div>
-            </div>
-
-            <!-- Starija grupa -->
-            <div class="bg-gray-50 rounded-lg shadow p-4 space-y-2">
-                <div class="flex items-center space-x-2">
-                    <span class="text-red-500 text-xl">
-                        <img src="{% static 'img/icons/ion_man.png' %}" alt="Ikonica 1"
-                             class="mx-auto w-5 h-5 object-contain">
-                    </span>
-                    <h3 class="text-blue-700 font-semibold text-lg">Starija grupa</h3>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <span class="text-xl"><img src="{% static 'img/icons/lets-icons_date-range-fill.png' %}"
-                                               alt="Ikonica 1" class="mx-auto w-5 h-5 object-contain"></span>
-                    <p>Utorak i Četvrtak</p>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <span class="text-xl"><img src="{% static 'img/icons/carbon_time-filled.png' %}" alt="Ikonica 1"
-                                               class="mx-auto w-5 h-5 object-contain"></span></span>
-                    <p>20:30 DO 21:30</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Trener i Kontakt -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <!-- Trener -->
-            <div class="bg-gray-50 rounded-lg shadow p-4">
-                <div class="flex items-center space-x-2 mb-2">
-                    <span class="text-red-500 text-xl">
-                        <img src="{% static 'img/icons/devicon-plain_karatelabs.png' %}" alt="Ikonica 1" class="mx-auto w-8 h-8 object-contain"></span>
-                    <h3 class="text-blue-700 font-semibold text-lg">Trener</h3>
-                </div>
-                <p class="text-gray-800">Aleksandar Petrović</p>
-                <p class="text-gray-800">Crni pojas 2. Dan</p>
-            </div>
-
-            <!-- Kontakt -->
-            <div class="bg-gray-50 rounded-lg shadow p-4">
-                <div class="flex items-center space-x-2 mb-2">
-                    <span class="text-red-500 text-xl"><img src="{% static 'img/icons/ic_baseline-phone.png' %}" alt="Ikonica 1" class="mx-auto w-8 h-8 object-contain"></span></span>
-                    <h3 class="text-blue-700 font-semibold text-lg">Kontakt</h3>
-                </div>
-                <p class="text-black font-semibold underline">069/2153419</p>
-            </div>
-        </div>
-
-        <!-- Mapa (placeholder) -->
-        <div class="rounded-lg overflow-hidden">
-            <iframe
-                    class="w-full h-64"
-                    src="https://www.google.com/maps?q=Volcano%20Gym%2C%20Beograd&output=embed"
-                    allowfullscreen=""
-                    loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
-        </div>
-    </div>
-        <div class="bg-white rounded-xl shadow-md p-6 space-y-6 ">
-        <!-- Lokacija -->
-        <div class="text-center">
-            <div class="flex items-center justify-center space-x-2">
-                <span class="text-red-500 text-2xl">                        <img
-                        src="{% static 'img/icons/ix_location-filled.png' %}" alt="Ikonica 1"
-                        class="mx-auto w-10 h-10 object-contain"></span>
-                <h2 class="text-2xl font-bold text-blue-700">Zemun</h2>
-            </div>
-            <p class="text-gray-700">Ugrinovačka 206, Beograd 11080</p>
-        </div>
-        <hr>
-        <!-- Grupe -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <!-- Mlađa grupa -->
-            <div class="bg-gray-50 rounded-lg shadow p-4 space-y-2">
-                <div class="flex items-center space-x-2">
-                    <span class="text-red-500 text-xl">
-                        <img src="{% static 'img/icons/fa-solid_child.png' %}" alt="Ikonica 1"
-                             class="mx-auto w-5 h-5 object-contain">
-                    </span>
-                    <h3 class="text-blue-700 font-semibold text-lg">Mlađa grupa</h3>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <span class="text-xl"><img src="{% static 'img/icons/lets-icons_date-range-fill.png' %}"
-                                               alt="Ikonica 1" class="mx-auto w-5 h-5 object-contain"></span>
-                    <p>Utorak i Četvrtak</p>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <span class="text-xl"><img src="{% static 'img/icons/carbon_time-filled.png' %}" alt="Ikonica 1"
-                                               class="mx-auto w-5 h-5 object-contain"></span></span>
-                    <p>19:30 DO 20:30</p>
-                </div>
-            </div>
-
-            <!-- Starija grupa -->
-            <div class="bg-gray-50 rounded-lg shadow p-4 space-y-2">
-                <div class="flex items-center space-x-2">
-                    <span class="text-red-500 text-xl">
-                        <img src="{% static 'img/icons/ion_man.png' %}" alt="Ikonica 1"
-                             class="mx-auto w-5 h-5 object-contain">
-                    </span>
-                    <h3 class="text-blue-700 font-semibold text-lg">Starija grupa</h3>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <span class="text-xl"><img src="{% static 'img/icons/lets-icons_date-range-fill.png' %}"
-                                               alt="Ikonica 1" class="mx-auto w-5 h-5 object-contain"></span>
-                    <p>Utorak i Četvrtak</p>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <span class="text-xl"><img src="{% static 'img/icons/carbon_time-filled.png' %}" alt="Ikonica 1"
-                                               class="mx-auto w-5 h-5 object-contain"></span></span>
-                    <p>20:30 DO 21:30</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Trener i Kontakt -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <!-- Trener -->
-            <div class="bg-gray-50 rounded-lg shadow p-4">
-                <div class="flex items-center space-x-2 mb-2">
-                    <span class="text-red-500 text-xl">
-                        <img src="{% static 'img/icons/devicon-plain_karatelabs.png' %}" alt="Ikonica 1" class="mx-auto w-8 h-8 object-contain"></span>
-                    <h3 class="text-blue-700 font-semibold text-lg">Trener</h3>
-                </div>
-                <p class="text-gray-800">Aleksandar Petrović</p>
-                <p class="text-gray-800">Crni pojas 2. Dan</p>
-            </div>
-
-            <!-- Kontakt -->
-            <div class="bg-gray-50 rounded-lg shadow p-4">
-                <div class="flex items-center space-x-2 mb-2">
-                    <span class="text-red-500 text-xl"><img src="{% static 'img/icons/ic_baseline-phone.png' %}" alt="Ikonica 1" class="mx-auto w-8 h-8 object-contain"></span></span>
-                    <h3 class="text-blue-700 font-semibold text-lg">Kontakt</h3>
-                </div>
-                <p class="text-black font-semibold underline">069/2153419</p>
-            </div>
-        </div>
-
-        <!-- Mapa (placeholder) -->
-        <div class="rounded-lg overflow-hidden">
-            <iframe
-                    class="w-full h-64"
-                    src="https://www.google.com/maps?q=Volcano%20Gym%2C%20Beograd&output=embed"
-                    allowfullscreen=""
-                    loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
-        </div>
+        {% else %}
+        <p class="locations-page__empty font-body">Lokacije uskoro.</p>
+        {% endif %}
     </div>
 </section>
-
 {% endblock %}
-

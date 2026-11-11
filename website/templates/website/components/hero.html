@@ -1,26 +1,71 @@
 {% load static %}
 
-<section class="relative bg-gray-100 h-screen mt-[64px]">
-    <!-- Background image -->
-    <div class="absolute inset-0">
-        <img src="{% static 'img/website/hero.jpg' %}" alt="Hero Background" class="w-full h-full object-cover ">
+<section class="relative w-full overflow-hidden bg-[#111214]
+                min-h-[100svh] h-[100svh]
+                md:h-[min(100svh,max(36rem,calc(100vw*576/1024)))]
+                flex flex-col justify-end md:justify-center"
+     aria-label="Uvod">
+    <div class="hero-media absolute inset-0">
+        <picture>
+            <source media="(min-width: 768px)"
+                    type="image/webp"
+                    srcset="{% static 'img/website/hero-desktop.webp' %}">
+            <img src="{% static 'img/website/hero-mobile.jpg' %}"
+                 alt="Vežbač realnog aikida u stavu"
+                 width="1024"
+                 height="576"
+                 class="absolute inset-0 w-full h-full object-cover object-[center_12%] md:object-[72%_42%]"
+                 fetchpriority="high"
+                 decoding="async">
+        </picture>
+        {# Mobile: fade into charcoal at bottom #}
+        <div class="absolute inset-0 pointer-events-none md:hidden
+                    bg-gradient-to-t from-[#111214] via-[#111214]/90 to-black/20"
+             aria-hidden="true"></div>
+        {# Desktop: soft left shade for type contrast #}
+        <div class="absolute inset-0 pointer-events-none hidden md:block
+                    bg-gradient-to-r from-[#111214]/88 via-[#111214]/40 to-transparent"
+             aria-hidden="true"></div>
     </div>
 
-    <!-- Overlay content -->
-    <div class="relative max-w-7xl mx-auto px-6 py-64 flex flex-col ">
-        <p class="text-4xl sm:text-5xl font-bold text-red-600 leading-tight">
-            TENIRAJ TELO
-        </p>
-        <p class="text-4xl sm:text-5xl font-bold text-blue-600 leading-tight">
-            SMIRI UM
-        </p>
-        <p class="text-4xl sm:text-5xl font-bold text-white leading-tight">
-            OVLADAJ SOBOM!
-        </p>
+    <div class="relative z-10 w-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-10
+                pt-20 pb-8 sm:pb-10
+                md:pt-24 md:pb-16 lg:pb-20">
+        <div class="hero-animate max-w-[22rem] sm:max-w-md md:max-w-xl lg:max-w-2xl">
+            <div class="hero-accent-line w-9 sm:w-11 h-[3px] bg-[#CF1833] mb-3 sm:mb-4" aria-hidden="true"></div>
 
-        <p class="mt-2 sm:text-xl text-white max-w-sm">
-            Pridruži se školama Realnog Aikidoa u Beogradu i nauči veštinu samoodbrane za stvarni svet.
-        </p>
+            <p class="font-bold text-xs sm:text-sm md:text-base tracking-[0.22em] uppercase text-[#F4F0E8]/90 mb-3 sm:mb-4">
+                Realni Aikido / Beograd
+            </p>
 
+            <h1 class="font-extrabold uppercase text-[#F4F0E8]
+                       text-[clamp(2.75rem,13vw,3.75rem)]
+                       md:text-[clamp(3.75rem,6vw,6rem)]
+                       leading-[0.92] tracking-tight">
+                <span class="block">Nauči da se</span>
+                <span class="block">odbraniš.</span>
+            </h1>
+
+            <p class="mt-4 sm:mt-5 md:mt-6 text-base sm:text-lg md:text-xl text-[#F4F0E8]/85 leading-relaxed max-w-md">
+                Treniraj realni aikido u Beogradu i nauči praktične tehnike samoodbrane.
+            </p>
+
+            <div class="mt-6 sm:mt-7 md:mt-8 flex flex-col md:flex-row md:items-center gap-4 md:gap-6">
+                <a href="{% url 'locations' %}"
+                   class="btn-motion inline-flex items-center justify-center w-full md:w-auto
+                          px-7 py-3.5 bg-[#CF1833] text-white font-semibold text-base
+                          hover:bg-[#b4142c]
+                          focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F4F0E8]">
+                    Pronađi lokaciju&nbsp;↗
+                </a>
+                <a href="{% url 'programs' %}"
+                   class="link-motion inline-flex items-center justify-center md:justify-start
+                          text-[#F4F0E8] font-semibold text-base
+                          underline-offset-4 hover:underline
+                          focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F4F0E8]">
+                    Pogledaj programe&nbsp;→
+                </a>
+            </div>
+        </div>
     </div>
 </section>

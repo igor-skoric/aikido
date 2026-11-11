@@ -1,17 +1,14 @@
-{% load static %}
-
-
-<div class="flex text-gray-300 py-2 px-4 bg-white rounded-xl shadow mb-2" aria-label="breadcrumb">
-    <div class="">
-        <ul class="mx-auto max-5xl flex items-center space-x-2 ">
-            {% for name, url in breadcrumbs %}
-                <li class="flex items-center">
-                    <a href="{{ url }}" class="text-gray-600 hover:text-blue-800">{{ name }}</a>
-                    {% if not forloop.last %}
-                    <span class="mx-2 text-gray-400">/</span>
-                    {% endif %}
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
-</div>
+<nav class="mb-6 sm:mb-8" aria-label="Breadcrumb">
+    <ol class="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs sm:text-sm text-muted bg-white/80 backdrop-blur px-3 sm:px-4 py-2 sm:py-2.5 rounded-brand shadow-sm">
+        {% for name, url in breadcrumbs %}
+        <li class="flex items-center gap-2 min-w-0">
+            {% if not forloop.last %}
+            <a href="{{ url }}" class="hover:text-brand-blue transition truncate max-w-[10rem] sm:max-w-none">{{ name }}</a>
+            <span class="text-stone-300 shrink-0" aria-hidden="true">/</span>
+            {% else %}
+            <span class="text-ink font-medium truncate" aria-current="page">{{ name }}</span>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ol>
+</nav>

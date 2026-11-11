@@ -1,77 +1,185 @@
 {% extends 'base.html' %}
-
 {% load static %}
-{% block title %}Instruktor{% endblock %}
+{% block title %}{{ post.title }} — Blog | Realni Aikido Vokić{% endblock %}
+{% block meta_description %}{{ post.description|striptags|truncatechars:155 }}{% endblock %}
+{% block og_type %}article{% endblock %}
+{% block og_title %}{{ post.title }} — Realni Aikido Vokić{% endblock %}
+{% block og_description %}{{ post.description|striptags|truncatechars:155 }}{% endblock %}
+{% block twitter_title %}{{ post.title }} — Realni Aikido Vokić{% endblock %}
+{% block twitter_description %}{{ post.description|striptags|truncatechars:155 }}{% endblock %}
+{% block og_image %}{% if post.main_image %}{{ request.scheme }}://{{ request.get_host }}{{ post.main_image.url }}{% else %}{{ block.super }}{% endif %}{% endblock %}
 
 {% block content %}
+<article class="blog-post-page" aria-labelledby="blog-post-heading">
+    <div class="blog-post-page__container">
+        <header class="blog-post-page__intro reveal">
+            <nav aria-label="Breadcrumb" class="blog-post-page__crumbs">
+                <ol>
+                    <li>
+                        <a href="{% url 'home' %}">Početna</a>
+                    </li>
+                    <li aria-hidden="true">/</li>
+                    <li>
+                        <a href="{% url 'blog' %}">Blog</a>
+                    </li>
+                    <li aria-hidden="true">/</li>
+                    <li aria-current="page">{{ post.title }}</li>
+                </ol>
+            </nav>
 
-<div class="max-w-5xl mx-auto px-5 mt-36 ">
-    {% include 'website/components/breadcrumbs.html' %}
-</div>
-<!-- Single post -->
-<section class="max-w-5xl mx-auto bg-white rounded-lg">
-    <div class="aspect-[5/3]">
-        <img src="{{post.main_image.url}}" alt="Instruktor 1"
-             class="w-full h-full object-cover rounded-t-lg">
+            {% if post.date %}
+            <div class="blog-post-page__meta">
+                <span class="blog-post-page__meta-line" aria-hidden="true"></span>
+                <time class="blog-post-page__date font-body" datetime="{{ post.date|date:'Y-m-d' }}">
+                    {{ post.date|date:"d.m.Y." }}
+                </time>
+            </div>
+            {% endif %}
+
+            <h1 id="blog-post-heading" class="blog-post-page__heading font-display">
+                {{ post.title }}
+            </h1>
+        </header>
+
+        {% if post.main_image %}
+        <figure class="blog-post-page__hero reveal">
+            <img src="{{ post.main_image.url }}"
+                 alt=""
+                 width="920"
+                 class="blog-post-page__hero-img"
+                 decoding="async"
+                 fetchpriority="high"
+                 data-blog-hero>
+        </figure>
+        {% endif %}
+
+        <div class="blog-post-page__body reveal font-body{% if post_body_is_html %} blog-post-page__body--html{% endif %}"
+             data-blog-body>
+            {% if post_body %}
+                {% if post_intro %}
+                <p>{{ post_intro }}</p>
+                {% endif %}
+                {% if post_body_is_html %}
+                    {{ post_body|safe }}
+                {% else %}
+                    {{ post_body|linebreaks }}
+                {% endif %}
+            {% elif post_intro %}
+                <p>{{ post_intro }}</p>
+            {% else %}
+                {{ post.description|linebreaks }}
+            {% endif %}
+        </div>
+
+        {% if post.images %}
+        <section class="blog-post-page__gallery reveal" aria-label="Galerija">
+            <div class="blog-post-page__gallery-grid">
+                {% for image in post.images %}
+                <button type="button"
+                        class="blog-post-page__gallery-item"
+                        onclick="openLightbox({{ forloop.counter0 }})"
+                        aria-label="Otvori sliku {{ forloop.counter }}">
+                    <img src="{{ image.image.url }}"
+                         alt="{{ image.caption|default:post.title }}"
+                         width="320"
+                         height="240"
+                         loading="lazy"
+                         decoding="async">
+                </button>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        <div class="blog-post-page__footer reveal">
+            <div class="blog-post-page__rule" aria-hidden="true"></div>
+            <a href="{% url 'blog' %}" class="blog-post-page__back">
+                ←&nbsp;Nazad na blog
+            </a>
+        </div>
     </div>
-    <div class="py-5">
-        <h1 class="text-2xl text-center">{{post.title}}</h1>
-        <p class="text-center">{{post.date}}</p><br>
-        <p class="px-20">{{post.description}}</p>
-    </div>
-</section>
+</article>
 
-<br>
-
-<!-- Image gallery -->
-<section class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 p-5">
-    {% for image in post.images %}
-    <img src="{{image.image.url}}" class="w-full h-60 object-cover cursor-pointer rounded-sm"
-         onclick="openLightbox({{ forloop.counter0 }})"/>
-    {% endfor %}
-
-</section>
-
-<!-- Full screen -->
-<div id="lightbox" class="fixed inset-0 bg-black bg-opacity-90 hidden items-center justify-center z-50">
-    <button onclick="prevImage()" class="absolute left-4 text-white text-3xl">&#8592;</button>
-    <img id="lightbox-img" class="max-h-[90vh] max-w-[90vw]"/>
-    <button onclick="nextImage()" class="absolute right-4 text-white text-3xl">&#8594;</button>
-    <button onclick="closeLightbox()" class="absolute top-4 right-4 text-white text-2xl">✕</button>
+{% if post.images %}
+<div id="lightbox"
+     class="fixed inset-0 bg-black/90 hidden items-center justify-center z-[90] p-4"
+     role="dialog"
+     aria-modal="true"
+     aria-label="Galerija slika">
+    <button type="button" onclick="prevImage()" class="absolute left-2 sm:left-4 text-white text-2xl sm:text-3xl p-2" aria-label="Prethodna">←</button>
+    <img id="lightbox-img" class="max-h-[80vh] max-w-full rounded" alt="">
+    <button type="button" onclick="nextImage()" class="absolute right-2 sm:right-4 text-white text-2xl sm:text-3xl p-2" aria-label="Sledeća">→</button>
+    <button type="button" onclick="closeLightbox()" class="absolute top-3 right-3 text-white text-2xl p-2" aria-label="Zatvori">✕</button>
 </div>
-
-<script>
-    const images = [
-      {% for image in post.images %}
-        '{{ image.image.url }}'{% if not forloop.last %},{% endif %}
-      {% endfor %}
-    ];
-
-      let currentIndex = 0;
-
-      function openLightbox(index) {
-        currentIndex = index;
-        document.getElementById('lightbox-img').src = images[index];
-        document.getElementById('lightbox').classList.remove('hidden');
-        document.getElementById('lightbox').classList.add('flex');
-      }
-
-      function closeLightbox() {
-        document.getElementById('lightbox').classList.add('hidden');
-        document.getElementById('lightbox').classList.remove('flex');
-      }
-
-      function nextImage() {
-        currentIndex = (currentIndex + 1) % images.length;
-        document.getElementById('lightbox-img').src = images[currentIndex];
-      }
-
-      function prevImage() {
-        currentIndex = (currentIndex - 1 + images.length) % images.length;
-        document.getElementById('lightbox-img').src = images[currentIndex];
-      }
-</script>
-
+{% endif %}
 {% endblock %}
 
+{% block extra_js %}
+<script>
+(function () {
+  const hero = document.querySelector('[data-blog-hero]');
+  const body = document.querySelector('[data-blog-body]');
+  if (!hero || !body) return;
 
+  const heroSrc = hero.getAttribute('src') || '';
+  if (!heroSrc) return;
+
+  const normalize = (src) => {
+    try { return new URL(src, window.location.origin).pathname; }
+    catch (e) { return src; }
+  };
+  const heroPath = normalize(heroSrc);
+
+  body.querySelectorAll('img').forEach((img) => {
+    const path = normalize(img.getAttribute('src') || img.src || '');
+    if (path && path === heroPath) {
+      const wrap = img.closest('p, figure') || img;
+      wrap.remove();
+    }
+  });
+})();
+</script>
+{% if post.images %}
+<script>
+const images = [
+  {% for image in post.images %}
+  '{{ image.image.url }}'{% if not forloop.last %},{% endif %}
+  {% endfor %}
+];
+let currentIndex = 0;
+
+function openLightbox(index) {
+  if (!images.length) return;
+  currentIndex = index;
+  document.getElementById('lightbox-img').src = images[index];
+  const lb = document.getElementById('lightbox');
+  lb.classList.remove('hidden');
+  lb.classList.add('flex');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  const lb = document.getElementById('lightbox');
+  lb.classList.add('hidden');
+  lb.classList.remove('flex');
+  document.body.style.overflow = '';
+}
+function nextImage() {
+  if (!images.length) return;
+  currentIndex = (currentIndex + 1) % images.length;
+  document.getElementById('lightbox-img').src = images[currentIndex];
+}
+function prevImage() {
+  if (!images.length) return;
+  currentIndex = (currentIndex - 1 + images.length) % images.length;
+  document.getElementById('lightbox-img').src = images[currentIndex];
+}
+document.addEventListener('keydown', (e) => {
+  const lb = document.getElementById('lightbox');
+  if (!lb || lb.classList.contains('hidden')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowRight') nextImage();
+  if (e.key === 'ArrowLeft') prevImage();
+});
+</script>
+{% endif %}
+{% endblock %}

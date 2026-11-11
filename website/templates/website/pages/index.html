@@ -1,139 +1,373 @@
 {% extends 'base.html' %}
-
 {% load static %}
-{% block title %}Index Page{% endblock %}
+{% block title %}Realni Aikido Vokić — Samoodbrana i trening u Beogradu{% endblock %}
+{% block meta_description %}Realni Aikido Vokić: treninzi samoodbrane za decu i odrasle u Beogradu. Pronađi lokaciju, programe i instruktore.{% endblock %}
+{% block og_title %}Realni Aikido Vokić — Samoodbrana i trening u Beogradu{% endblock %}
+{% block og_description %}Treninzi samoodbrane za decu i odrasle u Beogradu. Lokacije, programi i instruktori Realnog Aikidoa Vokić.{% endblock %}
+{% block twitter_title %}Realni Aikido Vokić — Samoodbrana i trening u Beogradu{% endblock %}
+{% block twitter_description %}Treninzi samoodbrane za decu i odrasle u Beogradu.{% endblock %}
 
 {% block content %}
-
-<!--Hero slide Component-->
 {% include 'website/components/hero.html' %}
 
-<section class="py-24">
-    <div class="max-w-4xl mx-auto px-6 text-center">
-        <h2 class="text-4xl font-bold text-gray-800 mb-4">
-            Zašto baš Realni Aikido?
-        </h2>
-        <p class="text-lg text-gray-600">
-            Efikasna samoodbrana, mentalna snaga i samopouzdanje – za decu i odrasle. </p>
-    </div>
-</section>
-
-<section class="py-18 ">
-    <div class="max-w-7xl mx-auto px-6">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 text-center">
-
-            <!-- Kolona 1 -->
-            <div class="p-10">
-                <img src="{% static 'img/icons/stash_shield-user-light.png' %}" alt="Ikonica 1"
-                     class="mx-auto mb-4 w-20 h-20 object-contain">
-                <h3 class="text-xl font-semibold text-gray-800 mb-2">Samopouzdanje</h3>
-                <p class="text-gray-600 text-sm">Trening jača veru u sebe i razvija sigurnost.</p>
+<section class="bg-[#F5F2EC] text-[#111214] py-14 sm:py-16 lg:py-20" aria-labelledby="why-heading">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10
+                grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]
+                gap-10 lg:gap-14 xl:gap-20 items-start">
+        <header class="reveal max-w-md lg:max-w-none">
+            <div class="flex items-center gap-3 mb-4 sm:mb-5">
+                <span class="w-8 sm:w-10 h-[3px] bg-[#CF1833] shrink-0" aria-hidden="true"></span>
+                <p class="font-display font-bold text-xs sm:text-sm tracking-[0.2em] uppercase text-[#111214]/70">
+                    Prednosti treninga
+                </p>
             </div>
-
-            <!-- Kolona 2 -->
-            <div class="p-10 bg-[#FF0B0B]">
-                <img src="{% static 'img/icons/ph_user-focus.png' %}" alt="Ikonica 2"
-                     class="mx-auto mb-4 w-20 h-20 object-contain">
-                <h3 class="text-xl font-semibold text-white mb-2">Disiplina i fokus</h3>
-                <p class="text-white text-sm">Veštine koje pomažu i u školi, i na poslu, i u životu.</p>
-            </div>
-
-            <!-- Kolona 3 -->
-            <div class="p-10">
-                <img src="{% static 'img/icons/fa6-solid_hand-fist.png' %}" alt="Ikonica 3"
-                     class="mx-auto mb-4 w-20 h-20 object-contain">
-                <h3 class="text-xl font-semibold text-black/80 mb-2">Praktična samoodbrana</h3>
-                <p class="text-black/80 text-sm">Tehnike koje funkcionišu u stvarnim situacijama.</p>
-            </div>
-
-            <!-- Kolona 4 -->
-            <div class="p-10">
-                <img src="{% static 'img/icons/icon-park-solid_brain.png' %}" alt="Ikonica 4"
-                     class="mx-auto mb-4 w-20 h-20 object-contain">
-                <h3 class="text-xl font-semibold text-black/80 mb-2">Fizička i mentalna snaga</h3>
-                <p class="text-black/80 text-sm">Trening tela i uma kroz pokret i kontrolu.</p>
-            </div>
-
-        </div>
-    </div>
-</section>
-
-<br><br><br><br>
-
-<section class="w-full bg-black/80 text-white">
-    <div class="max-w-7xl mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-2 items-center gap-12">
-
-        <!-- Leva strana -->
-        <div class="flex flex-col items-center md:items-start text-center md:text-left space-y-6">
-            <div class="flex gap-2 flex-col md:flex-row items-center">
-                <!-- Ikonica -->
-                <img src="{% static 'img/icons/game-icons_kimono.png' %}" alt="Ikonica" class="w-32 h-32">
-
-                <!-- Naslov -->
-                <h2 class="text-3xl md:text-4xl font-bold max-w-lg">Naši programi su prilagođeni svim uzrastima</h2>
-            </div>
-
-            <!-- Tekst -->
-            <p class="text-gray-300 max-w-md">
-                Pronađi najbližu grupu u Beogradu i priključi se treningu koji ti najviše odgovara. Svaka grupa ima svog
-                trenera, termine i lokaciju prilagođene tvojim potrebama.
+            <h2 id="why-heading"
+                class="why-heading font-display font-extrabold uppercase tracking-tight text-[#111214] leading-[0.88]">
+                <span class="block">Zašto realni</span>
+                <span class="block">aikido?</span>
+            </h2>
+            <p class="mt-4 sm:mt-5 font-body text-base sm:text-lg text-[#111214]/75 leading-relaxed max-w-sm">
+                Trening za decu i odrasle koji razvija sigurnost, fokus i kontrolu pokreta.
             </p>
-        </div>
+        </header>
 
-        <!-- Desna strana -->
-        <div>
-            <img src="{% static 'img/website/section2.jpg' %}" alt="Slika"
-                 class="w-full rounded-lg shadow-lg object-cover">
-        </div>
+        <ul class="reveal-stagger grid grid-cols-1 md:grid-cols-2
+                   border-t border-stone-300/80 md:border-t-0
+                   md:border-l md:border-stone-300/80"
+            role="list">
+            <li class="reveal flex gap-4 sm:gap-5 p-5 sm:p-6 lg:p-7
+                       border-b border-stone-300/80
+                       md:border-r md:border-b">
+                <span class="shrink-0 mt-0.5 text-[#111214]" aria-hidden="true">
+                    <svg class="w-9 h-9 sm:w-10 sm:h-10" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M20 4.5 32 9.5v9.2c0 8.2-5.2 14.4-12 16.8-6.8-2.4-12-8.6-12-16.8V9.5L20 4.5Z"/>
+                        <path d="M20 13v10.5" stroke="#CF1833"/>
+                        <circle cx="20" cy="27" r="1.4" fill="#CF1833" stroke="none"/>
+                    </svg>
+                </span>
+                <div class="min-w-0">
+                    <h3 class="font-display font-bold text-lg sm:text-xl uppercase tracking-tight text-[#111214]">
+                        Samopouzdanje
+                    </h3>
+                    <p class="mt-1.5 font-body text-base text-[#111214]/70 leading-relaxed">
+                        Kroz trening razvijaš sigurnost u sebe i svoje pokrete.
+                    </p>
+                </div>
+            </li>
 
+            <li class="reveal flex gap-4 sm:gap-5 p-5 sm:p-6 lg:p-7
+                       border-b border-stone-300/80
+                       md:border-b">
+                <span class="shrink-0 mt-0.5 text-[#111214]" aria-hidden="true">
+                    <svg class="w-9 h-9 sm:w-10 sm:h-10" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <circle cx="20" cy="20" r="11"/>
+                        <circle cx="20" cy="20" r="3.5" stroke="#CF1833"/>
+                        <path d="M20 5v4M20 31v4M5 20h4M31 20h4" stroke="#CF1833"/>
+                    </svg>
+                </span>
+                <div class="min-w-0">
+                    <h3 class="font-display font-bold text-lg sm:text-xl uppercase tracking-tight text-[#111214]">
+                        Disciplina i fokus
+                    </h3>
+                    <p class="mt-1.5 font-body text-base text-[#111214]/70 leading-relaxed">
+                        Vežbaš pažnju i istrajnost iz treninga u trening.
+                    </p>
+                </div>
+            </li>
+
+            <li class="reveal flex gap-4 sm:gap-5 p-5 sm:p-6 lg:p-7
+                       border-b border-stone-300/80
+                       md:border-r md:border-b-0 lg:border-b-0">
+                <span class="shrink-0 mt-0.5 text-[#111214]" aria-hidden="true">
+                    <svg class="w-9 h-9 sm:w-10 sm:h-10" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 18V10.5a2 2 0 0 1 4 0V17"/>
+                        <path d="M20 17V9.5a2 2 0 0 1 4 0V17" stroke="#CF1833"/>
+                        <path d="M24 17.5V11a2 2 0 0 1 4 0v10.5c0 5-3.2 8.5-8 8.5h-1c-4.5 0-7-3-7-7v-5.5a2 2 0 0 1 4 0V18"/>
+                        <path d="M12 20.5c-1.4-.8-3-.4-3.6 1-.8 1.8.2 3.4 1.6 4.2"/>
+                    </svg>
+                </span>
+                <div class="min-w-0">
+                    <h3 class="font-display font-bold text-lg sm:text-xl uppercase tracking-tight text-[#111214]">
+                        Praktična samoodbrana
+                    </h3>
+                    <p class="mt-1.5 font-body text-base text-[#111214]/70 leading-relaxed">
+                        Učiš osnove samoodbrane kroz kontrolisane vežbe.
+                    </p>
+                </div>
+            </li>
+
+            <li class="reveal flex gap-4 sm:gap-5 p-5 sm:p-6 lg:p-7
+                       border-b border-stone-300/80 md:border-b-0">
+                <span class="shrink-0 mt-0.5 text-[#111214]" aria-hidden="true">
+                    <svg class="w-9 h-9 sm:w-10 sm:h-10" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                        <path d="M8 28h24"/>
+                        <path d="M20 28V12"/>
+                        <path d="M20 12h-7.5a3.5 3.5 0 0 1 0-7H20"/>
+                        <path d="M20 12h7.5a3.5 3.5 0 0 0 0-7H20" stroke="#CF1833"/>
+                        <circle cx="12.5" cy="8.5" r="1.3" fill="#CF1833" stroke="none"/>
+                        <circle cx="27.5" cy="8.5" r="1.3" fill="currentColor" stroke="none"/>
+                    </svg>
+                </span>
+                <div class="min-w-0">
+                    <h3 class="font-display font-bold text-lg sm:text-xl uppercase tracking-tight text-[#111214]">
+                        Fizička i mentalna snaga
+                    </h3>
+                    <p class="mt-1.5 font-body text-base text-[#111214]/70 leading-relaxed">
+                        Razvijaš koordinaciju, ravnotežu i smirenost.
+                    </p>
+                </div>
+            </li>
+        </ul>
     </div>
 </section>
 
-<section class="bg-black/80 text-white py-36">
-    <div class="relative bg-gray-100 py-24 px-6 max-w-[500px] mx-auto rounded-xl ">
-
-        <!-- Ikonica na vrhu centra -->
-        <div class="absolute -top-12 left-1/2 transform -translate-x-1/2">
-            <img src="{% static 'img/icons/ix_location-filled.png' %}" alt="Ikonica"
-                 class="w-24 h-24 rounded-full shadow-lg bg-white p-2">
+<section class="programs-home" aria-labelledby="programs-home-heading">
+    <div class="programs-home__grid">
+        <div class="programs-home__media reveal reveal--left">
+            <img src="{% static 'img/website/section-programs.jpg' %}"
+                 alt="Deca i instruktor na treningu realnog aikida"
+                 width="1536"
+                 height="1024"
+                 loading="lazy"
+                 decoding="async">
+            <div class="programs-home__fade-mobile" aria-hidden="true"></div>
+            <div class="programs-home__fade-desktop" aria-hidden="true"></div>
         </div>
 
-        <!-- Sadržaj sekcije -->
-        <div class="max-w-[500px] mx-auto text-center space-y-6">
-            <h2 class="text-3xl font-bold text-gray-900">Treniraj sa nama</h2>
-            <p class="text-gray-600">Pronađi najbližu grupu u Beogradu i priključi se treningu koji ti najviše odgovara.
-                Svaka grupa ima svog trenera, termine i lokaciju prilagođene tvojim potrebama.</p>
-            <a href="{% url 'locations' %}"
-               class="inline-block bg-blue-600 text-white px-6 py-3 rounded-xl shadow hover:bg-blue-700 transition">
-                Saznaj više
+        <div class="programs-home__copy reveal reveal--right">
+            <div class="programs-home__inner">
+                <div class="flex items-center gap-3 mb-4 sm:mb-5">
+                    <span class="w-8 sm:w-10 h-[3px] bg-[#CF1833] shrink-0" aria-hidden="true"></span>
+                    <p class="font-display font-bold text-xs sm:text-sm tracking-[0.2em] uppercase text-[#F4F0E8]/75">
+                        Programi treninga
+                    </p>
+                </div>
+
+                <h2 id="programs-home-heading"
+                    class="programs-home__heading font-display text-[#F4F0E8]">
+                    <span class="block">Aikido za decu</span>
+                    <span class="block">i odrasle.</span>
+                </h2>
+
+                <p class="mt-4 sm:mt-5 font-body text-base sm:text-lg text-[#F4F0E8]/80 leading-relaxed max-w-sm">
+                    Izaberi program prema uzrastu i pronađi grupu u Beogradu.
+                </p>
+
+                <div class="mt-7 sm:mt-8 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
+                    <a href="{% url 'programs' %}"
+                       class="btn-motion inline-flex items-center justify-center w-full sm:w-auto
+                              px-7 py-3.5 bg-[#CF1833] text-white font-semibold text-base
+                              hover:bg-[#b4142c]
+                              focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F4F0E8]">
+                        Pogledaj programe&nbsp;→
+                    </a>
+                    <a href="{% url 'locations' %}"
+                       class="link-motion inline-flex items-center justify-center sm:justify-start
+                              text-[#F4F0E8] font-semibold text-base
+                              underline-offset-4 hover:underline
+                              focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F4F0E8]">
+                        Pronađi lokaciju&nbsp;→
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="locations-home" aria-labelledby="locations-home-heading">
+    <div class="locations-home__grid">
+        <div class="locations-home__copy reveal reveal--left">
+            <div class="locations-home__inner">
+                <div class="flex items-center gap-3 mb-4 sm:mb-5">
+                    <span class="w-8 sm:w-10 h-[3px] bg-[#CF1833] shrink-0" aria-hidden="true"></span>
+                    <p class="font-display font-bold text-xs sm:text-sm tracking-[0.2em] uppercase text-[#111214]/70">
+                        Lokacije treninga
+                    </p>
+                </div>
+
+                <h2 id="locations-home-heading"
+                    class="locations-home__heading font-display text-[#111214]">
+                    <span class="block">Treniraj</span>
+                    <span class="block">sa nama.</span>
+                </h2>
+
+                <p class="mt-4 sm:mt-5 font-body text-base sm:text-lg text-[#111214]/75 leading-relaxed max-w-sm">
+                    Pronađi grupu u Beogradu i izaberi lokaciju koja ti odgovara.
+                </p>
+
+                <div class="mt-7 sm:mt-8">
+                    <a href="{% url 'locations' %}"
+                       class="btn-motion inline-flex items-center justify-center w-full sm:w-auto
+                              px-7 py-3.5 bg-[#CF1833] text-white font-semibold text-base
+                              hover:bg-[#b4142c]
+                              focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111214]">
+                        Pronađi lokaciju&nbsp;→
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="locations-home__map reveal reveal--right" aria-hidden="true">
+            <img class="locations-home__img"
+                 src="{% static 'img/website/belgrade-map.png' %}"
+                 alt=""
+                 width="1536"
+                 height="1024"
+                 loading="lazy"
+                 decoding="async">
+        </div>
+    </div>
+</section>
+
+<section class="instructors-home" aria-labelledby="instructors-home-heading">
+    <div class="instructors-home__grid">
+        <header class="instructors-home__intro reveal">
+            <div class="flex items-center gap-3 mb-4 sm:mb-5">
+                <span class="w-8 sm:w-10 h-[3px] bg-[#CF1833] shrink-0" aria-hidden="true"></span>
+                <p class="font-display font-bold text-xs sm:text-sm tracking-[0.2em] uppercase text-[#111214]/70">
+                    Tim Realnog Aikidoa
+                </p>
+            </div>
+
+            <h2 id="instructors-home-heading"
+                class="instructors-home__heading font-display text-[#111214]">
+                <span class="block">Naši</span>
+                <span class="block">instruktori</span>
+            </h2>
+
+            <p class="mt-4 sm:mt-5 font-body text-base sm:text-lg text-[#111214]/75 leading-relaxed max-w-sm">
+                Upoznajte tim koji vodi treninge za decu, tinejdžere i odrasle.
+            </p>
+
+            <div class="mt-7 sm:mt-8">
+                <a href="{% url 'instructors' %}"
+                   class="btn-motion inline-flex items-center justify-center w-full sm:w-auto
+                          px-7 py-3.5 bg-[#CF1833] text-white font-semibold text-base
+                          hover:bg-[#b4142c]
+                          focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111214]">
+                    Svi instruktori&nbsp;→
+                </a>
+            </div>
+        </header>
+
+        <ul class="instructors-home__list reveal-stagger" role="list">
+            {% for instructor in instructors %}
+            <li class="instructors-home__card reveal">
+                <a href="{% url 'instructor' instructor.slug %}"
+                   class="instructors-home__link block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#CF1833]">
+                    <div class="instructors-home__photo">
+                        <img src="{{ instructor.photo.url }}"
+                             alt="{{ instructor.name }}"
+                             width="370"
+                             height="370"
+                             loading="lazy"
+                             decoding="async"
+                             class="instructors-home__img{% if forloop.counter == 1 %} instructors-home__img--aleksandar{% elif forloop.counter == 2 %} instructors-home__img--nikola{% endif %}">
+                    </div>
+                    <div class="instructors-home__meta">
+                        <h3 class="instructors-home__name font-display text-[#111214]">
+                            {{ instructor.name }}
+                        </h3>
+                        <p class="instructors-home__role font-body text-[#111214]/75">
+                            <span>{{ instructor.get_title_display }}</span>
+                            <span class="instructors-home__dot" aria-hidden="true"></span>
+                            <span>{{ instructor.get_belt_rank_display }}</span>
+                        </p>
+                    </div>
+                </a>
+            </li>
+            {% empty %}
+            <li class="font-body text-[#111214]/60">Instruktori uskoro.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
+
+{% if blog_featured %}
+<section class="blog-home" aria-labelledby="blog-home-heading">
+    <div class="blog-home__container">
+        <header class="blog-home__header reveal">
+            <div class="blog-home__intro">
+                <div class="blog-home__eyebrow">
+                    <span class="blog-home__eyebrow-line" aria-hidden="true"></span>
+                    <p>Blog</p>
+                </div>
+                <h2 id="blog-home-heading" class="blog-home__heading font-display">
+                    Iz dojoa
+                </h2>
+                <p class="blog-home__lead font-body">
+                    Saveti za početnike i priče sa treninga.
+                </p>
+            </div>
+            <a href="{% url 'blog' %}" class="blog-home__all blog-home__all--header link-motion">
+                Sve objave&nbsp;→
             </a>
+        </header>
+
+        <div class="blog-home__rule" aria-hidden="true"></div>
+
+        <div class="blog-home__grid{% if not blog_side %} blog-home__grid--single{% endif %} reveal-stagger">
+            <a href="{% url 'post' blog_featured.slug %}"
+               class="blog-home__featured reveal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#CF1833]">
+                {% if blog_featured.main_image %}
+                <div class="blog-home__featured-media">
+                    <img src="{{ blog_featured.main_image.url }}"
+                         alt=""
+                         width="880"
+                         height="495"
+                         loading="lazy"
+                         decoding="async"
+                         class="blog-home__featured-img">
+                </div>
+                {% endif %}
+                <div class="blog-home__featured-body">
+                    {% if blog_featured.category %}
+                    <p class="blog-home__category font-display">{{ blog_featured.category }}</p>
+                    {% endif %}
+                    <h3 class="blog-home__featured-title font-display">{{ blog_featured.title }}</h3>
+                    {% if blog_featured.description %}
+                    <p class="blog-home__excerpt font-body">
+                        {{ blog_featured.description|striptags|truncatechars:140 }}
+                    </p>
+                    {% endif %}
+                </div>
+            </a>
+
+            {% if blog_side %}
+            <ul class="blog-home__side reveal" role="list">
+                {% for post in blog_side %}
+                <li class="blog-home__side-item">
+                    <a href="{% url 'post' post.slug %}"
+                       class="blog-home__row focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#CF1833]">
+                        {% if post.main_image %}
+                        <div class="blog-home__thumb">
+                            <img src="{{ post.main_image.url }}"
+                                 alt=""
+                                 width="160"
+                                 height="120"
+                                 loading="lazy"
+                                 decoding="async"
+                                 class="blog-home__thumb-img">
+                        </div>
+                        {% endif %}
+                        <div class="blog-home__row-copy">
+                            {% if post.category %}
+                            <p class="blog-home__category font-display">{{ post.category }}</p>
+                            {% endif %}
+                            <h3 class="blog-home__row-title font-display">{{ post.title }}</h3>
+                        </div>
+                        <span class="blog-home__arrow" aria-hidden="true">→</span>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
         </div>
+
+        <a href="{% url 'blog' %}" class="blog-home__all blog-home__all--footer">
+            Sve objave&nbsp;→
+        </a>
     </div>
 </section>
-
-
-<br><br>
-<br><br>
-
-
-<section class="py-24 bg-gray-100/80 rounded-xl">
-    <div class="px-6 text-center mx-auto max-w-3xl">
-        <h2 class="text-4xl font-bold text-gray-800 mb-4">
-            Naši instruktori
-        </h2>
-        <p class="text-lg text-gray-600 ">
-            Naš tim čine licencirani instruktori sa višegodišnjim iskustvom u radu sa decom, tinejdžerima i odraslima. 
-            Posvećeni su prenošenju znanja kroz bezbedan, prilagođen i motivišući pristup svakom vežbaču. </p>
-    </div>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-6   mx-auto max-w-6xl ">
-        {% for instructor in instructors %}
-            {% include 'website/components/instructors.html' with instructor=instructor %}
-        {% endfor %}
-    </div>
-
-</section>
-
-
+{% endif %}
 {% endblock %}
-

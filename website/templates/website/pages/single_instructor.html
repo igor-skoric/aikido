@@ -1,35 +1,46 @@
 {% extends 'base.html' %}
-
 {% load static %}
-{% block title %}Instruktor{% endblock %}
+{% block title %}{{ instructor.name }} — Realni Aikido{% endblock %}
 
 {% block content %}
+<section class="instructor-page" aria-labelledby="instructor-page-heading">
+    <div class="instructor-page__container">
+        <article class="instructor-page__layout reveal">
+            {% if instructor.photo %}
+            <div class="instructor-page__photo">
+                <img src="{{ instructor.photo.url }}"
+                     alt="{{ instructor.name }}"
+                     width="280"
+                     height="350"
+                     class="instructor-page__img{% if 'aleksandar' in instructor.slug %} instructor-page__img--aleksandar{% elif 'nikola' in instructor.slug %} instructor-page__img--nikola{% endif %}"
+                     decoding="async"
+                     fetchpriority="high">
+            </div>
+            {% endif %}
 
-<div class="max-w-5xl mx-auto px-5 mt-36 ">
-    {% include 'website/components/breadcrumbs.html' %}
-</div>
-<div class="max-w-5xl mx-auto">
-    <div class="bg-white shadow-lg rounded-2xl p-6 grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-8">
-        <!-- Leva kolona -->
-        <div>
-            <img src="{{instructor.photo.url}}" alt="Instruktor 1" class="w-full object-cover rounded-xl">
+            <div class="instructor-page__content">
+                <h1 id="instructor-page-heading" class="instructor-page__name">
+                    {{ instructor.name }}
+                </h1>
+
+                <p class="instructor-page__role">{{ instructor.get_title_display }}</p>
+                <span class="instructor-page__accent" aria-hidden="true"></span>
+                <p class="instructor-page__rank">{{ instructor.get_belt_rank_display }}</p>
+
+                {% if instructor.description and "lorem ipsum" not in instructor.description|lower %}
+                <div class="instructor-page__bio">
+                    {{ instructor.description|linebreaks }}
+                </div>
+                {% endif %}
+            </div>
+        </article>
+
+        <div class="instructor-page__footer reveal">
+            <div class="instructor-page__rule" aria-hidden="true"></div>
+            <a href="{% url 'instructors' %}" class="instructor-page__back">
+                ←&nbsp;Svi instruktori
+            </a>
         </div>
-        <!-- Desna kolona -->
-        <div>
-            <h1 class="text-4xl">{{instructor.name}}</h1>
-            <i class="font-semibold">{{instructor.get_title_display}}</i>
-            <i>{{instructor.get_belt_rank_display}}</i>
-            <br>
-            <br>
-            <p>{{instructor.short_description}}</p>
-            <br>
-            <p class="">{{instructor.description|safe}}
-            </p>
-
-        </div>
-
     </div>
-</div>
-
+</section>
 {% endblock %}
-

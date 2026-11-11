@@ -1,113 +1,98 @@
 {% extends 'base.html' %}
-
 {% load static %}
-{% block title %}Instruktor{% endblock %}
+{% block title %}{{ product.name }} — Realni Aikido{% endblock %}
 
 {% block content %}
-<div class="max-w-5xl mx-auto px-5 mt-36 ">
+<div class="max-w-5xl mx-auto px-4 sm:px-5 pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-16">
     {% include 'website/components/breadcrumbs.html' %}
-</div>
-<section class="max-w-5xl mx-auto">
-    <div class=" bg-white shadow-lg rounded-lg p-6 grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-4">
-        <!-- Leva kolona -->
-        <div class="flex md:flex-row flex-col gap-2">
 
-            <div class="flex md:flex-col gap-2  order-2 md:order-1 md:w-[100px] md:h-[400px] overflow-y-auto custom-scrollbar">
+    <div class="bg-white rounded-brand shadow-sm ring-1 ring-stone-200 p-4 sm:p-6 grid grid-cols-1 md:grid-cols-[1.4fr_1fr] gap-6 sm:gap-8 reveal">
+        <div class="flex flex-col md:flex-row gap-3 min-w-0">
+            {% if product.images %}
+            <div class="flex md:flex-col gap-2 order-2 md:order-1 md:w-24 md:max-h-[420px] overflow-x-auto md:overflow-y-auto custom-scrollbar">
                 {% for image in product.images %}
-
-                <img src="{{image.image.url}}"
-                     class="object-cover cursor-pointer rounded  md:w-full w-[90%]" onclick="changeImage(this)">
+                <button type="button" class="shrink-0" onclick="changeImage(this)" aria-label="Prikaži sliku {{ forloop.counter }}">
+                    <img src="{{ image.image.url }}" alt="{{ image.caption|default:product.name }}"
+                         class="object-cover rounded-brand w-16 h-16 sm:w-20 sm:h-20 md:w-full md:h-20 ring-1 ring-stone-200">
+                </button>
                 {% endfor %}
-
             </div>
-            <!-- Glavna slika desno od sporednih -->
-            <div class="order-1 md:order-2 w-full overflow-hidden " onmousemove="zoom(event)"
-                 onmouseleave="resetZoom()">
-                <img id="mainImage" src="{{product.main_image.url}}" alt="Instruktor 1"
-                     class="object-cover cursor-pointer rounded transition-transform duration-300 ease-in-out">
+            {% endif %}
+            <div class="order-1 md:order-2 flex-1 overflow-hidden rounded-brand min-w-0 hidden md:block"
+                 onmousemove="zoom(event)" onmouseleave="resetZoom()">
+                <img id="mainImage" src="{{ product.main_image.url }}" alt="{{ product.name }}"
+                     class="object-cover w-full h-full max-h-[480px] transition-transform duration-300">
+            </div>
+            <div class="order-1 md:order-2 flex-1 overflow-hidden rounded-brand min-w-0 md:hidden">
+                <img id="mainImageMobile" src="{{ product.main_image.url }}" alt="{{ product.name }}"
+                     class="object-cover w-full max-h-[70vw] sm:max-h-[420px]">
             </div>
         </div>
-        <!-- Desna kolona -->
 
-        <div class="">
-            <h1 class="text-4xl">{{product.name}}</h1><Br>
-            <p>SKU: BMA 113-115</p>
-            <br>
-            <hr>
-            <br>
-            <p>{{product.additional_info}}</p>
-            <br>
+        <div class="space-y-4 min-w-0">
+            <h1 class="font-display text-3xl sm:text-4xl text-ink break-words">{{ product.name }}</h1>
+            {% if product.sku %}
+            <p class="text-sm text-muted">SKU: {{ product.sku }}</p>
+            {% endif %}
+            {% if product.description %}
+            <div class="text-muted text-base leading-relaxed">{{ product.description|linebreaks }}</div>
+            {% endif %}
+            {% if product.additional_info %}
             <div>
-                <button class="accordion-toggle w-full text-left font-semibold text-lg flex shadow p-2 rounded-xl justify-between items-center">
-                    <span>DODATNE INFORMACIJE</span>
-                    <span class="icon">+</span>
+                <button type="button"
+                        class="accordion-toggle w-full text-left font-semibold flex justify-between items-center shadow-sm ring-1 ring-stone-200 p-3 rounded-brand"
+                        aria-expanded="false">
+                    <span>Dodatne informacije</span>
+                    <span class="icon" aria-hidden="true">+</span>
                 </button>
                 <div class="accordion-panel overflow-hidden transition-all duration-300 ease-in-out max-h-0">
-                    <ul class="p-4 space-y-2">
-                        <li>
-                            <button class="accordion-toggle w-full text-left {% if subsection.yacht_details.all %} border border-b {% endif %}  flex justify-between items-center">
-                                <span>CONTACT US FOR PRE ORDER Delivery time: 1 - 3 MONTHS Description: Elegant slim fit lace jumpsuit, with a plunging V neckline and back like, embroidered with beads featuring feathered puffy sleeves. Details: Model is wearing size 34 Europe number. The model’s height: 178/ 70.0, bust: 83 cm/ 32.6, waist: 59 cm/23.2, hips: 89 cm / 35.0</span>
-                            </button>
-                        </li>
-                    </ul>
+                    <div class="p-4 text-sm text-muted">{{ product.additional_info|linebreaks }}</div>
                 </div>
             </div>
-            <br>
-            <p class="text-xl font-bold">{{product.price}} rsd</p>
-            <br>
-
-            <button class="text-white py-1 px-6 bg-blue-600 rounded-md">PORUČI</button>
-        </div>
-
-
-    </div>
-</section>
-<br><br>
-<!-- Sekcija ostalih proizvoda iz kategorije -->
-<section class="relative w-full mb-20 bg-white p-5">
-    <h1 class="text-center text-4xl my-20">Povezani proizvodi</h1>
-
-    <!-- Slider kontejner -->
-    <div id="slider" class="flex overflow-x-auto scroll-smooth scrollbar-hide space-x-2 max-h-[500px]">
-
-        {% for related_product in related_products %}
-        <div class="w-1/2 md:w-1/3 flex-shrink-0">
-            <a href="{% url 'product' related_product.slug %}">
-                <img src="{{related_product.main_image.url}}" class=" object-cover w-full h-full"/>
+            {% endif %}
+            <p class="text-xl sm:text-2xl font-bold text-ink">{{ product.price }} RSD</p>
+            <a href="{% url 'contact' %}"
+               class="inline-flex w-full sm:w-auto justify-center px-6 py-3 bg-brand-blue text-white rounded-brand font-semibold hover:bg-brand-blue-dark transition">
+                Poruči / upit
             </a>
         </div>
-        {% endfor %}
     </div>
-    <!-- Dugme levo -->
-    <button onclick="slide('left')"
-            class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/70 rounded-full p-2 shadow z-10">
-        ←
-    </button>
-    <!-- Dugme desno -->
-    <button onclick="slide('right')"
-            class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/70 rounded-full p-2 shadow z-10">
-        →
-    </button>
-</section>
 
+    {% if related_products %}
+    <section class="relative mt-12 sm:mt-16 mb-4 sm:mb-8">
+        <h2 class="font-display text-xl sm:text-2xl text-center text-ink mb-6 sm:mb-8">Povezani proizvodi</h2>
+        <div id="slider" class="flex overflow-x-auto scroll-smooth scrollbar-hide gap-3 sm:gap-4 pb-2 px-1">
+            {% for related_product in related_products %}
+            <div class="w-[70%] sm:w-1/2 md:w-1/3 flex-shrink-0">
+                <a href="{% url 'product' related_product.slug %}" class="block rounded-brand overflow-hidden ring-1 ring-stone-200">
+                    <img src="{{ related_product.main_image.url }}" alt="{{ related_product.name }}"
+                         class="object-cover w-full aspect-[4/3]">
+                    <p class="p-3 text-center font-medium text-sm">{{ related_product.name }}</p>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+        <button type="button" onclick="slide('left')" aria-label="Levo"
+                class="hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 bg-white/90 rounded-full p-2 shadow ring-1 ring-stone-200 items-center justify-center">←</button>
+        <button type="button" onclick="slide('right')" aria-label="Desno"
+                class="hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 bg-white/90 rounded-full p-2 shadow ring-1 ring-stone-200 items-center justify-center">→</button>
+    </section>
+    {% endif %}
+</div>
+{% endblock %}
 
-<script src="{% static 'js/slider.js'%}"></script>
+{% block extra_js %}
+<script src="{% static 'js/slider.js' %}"></script>
 <script src="{% static 'js/imgZoom.js' %}"></script>
-
 <script>
-    //Glavna slika i sporedne
-const thumbnails = document.querySelectorAll('div > img[onclick="changeImage(this)"]');
-const mainImage = document.getElementById('mainImage');
-const fullscreenOverlay = document.getElementById('fullscreenOverlay');
-const fullscreenImage = document.getElementById('fullscreenImage');
-
-let currentIndex = 0;
-let imageSources = Array.from(thumbnails).map(img => img.src);
-
 function changeImage(el) {
-  mainImage.src = el.src;
-  currentIndex = imageSources.indexOf(el.src);
+  const img = el.querySelector('img') || el;
+  const main = document.getElementById('mainImage');
+  const mobile = document.getElementById('mainImageMobile');
+  if (img?.src) {
+    if (main) main.src = img.src;
+    if (mobile) mobile.src = img.src;
+  }
 }
 </script>
 {% endblock %}
-

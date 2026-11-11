@@ -1,75 +1,75 @@
 {% load static %}
 
-
-<svg viewBox="0 0 1440 150" xmlns="http://www.w3.org/2000/svg">
-    <path fill="#ffff" d="M0,64 C360,160 1080,-20 1440,80 L1440,150 L0,150 Z"/>
-</svg>
-<footer class="bg-white text-gray-700 border-b ">
-    <div class="max-w-7xl mx-auto px-2 md:px-6 py-12 grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8">
-        <!-- Logo -->
-        <div class="flex items-start">
-            <a href="{% url 'home' %}">
-                <img src="{% static 'img/website/logo.png' %}" alt="Logo"
-                     class="h-32 w-auto object-contain shadow-xl rounded-full">
+<footer class="mt-12 sm:mt-20 bg-ink text-stone-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-14 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-8 sm:gap-10">
+        <div class="md:col-span-5 space-y-4 sm:col-span-2">
+            <a href="{% url 'home' %}" class="inline-flex items-center gap-3">
+                <img src="{% static 'img/website/logo.png' %}" alt="Realni Aikido"
+                     class="h-14 w-14 sm:h-16 sm:w-16 object-contain rounded-full bg-white/10 p-1">
+                <span class="font-display text-base sm:text-lg text-white tracking-wide">Realni Aikido</span>
             </a>
+            <p class="text-stone-400 text-base leading-relaxed max-w-md">
+                {{ config.about_blurb }}
+            </p>
         </div>
 
-        <!-- Link Columns -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 p-5 rounded  shadow-xl">
-            <div>
-                <h4 class="font-semibold mb-4">Brzi linkovi</h4>
-                <ul class="space-y-2 text-sm">
-                    <li><a href="{% url 'home' %}" class="hover:text-blue-600">Početna</a></li>
-                    <li><a href="{% url 'locations' %}" class="hover:text-blue-600">Lokacije</a></li>
-                    <li><a href="{% url 'shop' %}" class="hover:text-blue-600">Prodavnica</a></li>
-                    <li><a href="{% url 'contact' %}" class="hover:text-blue-600">Kontakt</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="font-semibold mb-4">Informacije</h4>
-                <ul class="space-y-2 text-sm">
-                    <li><a href="{% url 'blog' %}" class="hover:text-blue-600">Blog</a></li>
-                    <li><a href="{% url 'programs' %}" class="hover:text-blue-600">Naši programi</a></li>
-                    <li><a href="{% url 'instructors' %}" class="hover:text-blue-600">Naši Instruktori</a>
-                    </li>
-                    <li><a href="{% url 'masters' %}" class="hover:text-blue-600">Naši Majstori</a></li>
-                    <li><a href="{% url 'timeline' %}" class="hover:text-blue-600">Istorijat</a></li>
-                </ul>
-            </div>
-            <div class="relative bg-blue-600 p-4 rounded-xl text-white shadow-xl">
-                <!-- Zastava Srbije -->
-                <img src="{% static 'img/icons/Flag_of_Serbia.svg' %}"
-                     alt="Zastava Srbije"
-                     class="absolute -top-6 right-4 w-12 h-auto shadow-md rounded-sm border border-white"/>
+        <div class="md:col-span-3">
+            <h4 class="font-display text-white text-sm tracking-wider uppercase mb-4">Navigacija</h4>
+            <ul class="space-y-2 text-base">
+                <li><a href="{% url 'home' %}" class="hover:text-white transition">Početna</a></li>
+                <li><a href="{% url 'locations' %}" class="hover:text-white transition">Lokacije</a></li>
+                <li><a href="{% url 'programs' %}" class="hover:text-white transition">Programi</a></li>
+                <li><a href="{% url 'instructors' %}" class="hover:text-white transition">Instruktori</a></li>
+                <li><a href="{% url 'blog' %}" class="hover:text-white transition">Blog</a></li>
+                <li><a href="{% url 'contact' %}" class="hover:text-white transition">Kontakt</a></li>
+            </ul>
+        </div>
 
-                <h4 class="font-semibold mb-4">Realni Aikido</h4>
-                <ul class="space-y-2 text-sm">
-                    <li>
-                        Realni aikido je savremeni sistem samoodbrane nastao u Srbiji, čiji je osnivač Ljubomir Vračarević. Ova veština predstavlja spoj tradicionalnih japanskih borilačkih principa i praktičnih tehnika prilagođenih svakodnevnim situacijama. Kao autentičan srpski brend, realni aikido je priznat i cenjen širom sveta, a u Srbiji se s ponosom razvija kao nacionalna borilačka veština koja promoviše disciplinu, samopouzdanje i ličnu sigurnost.
-                    </li>
-                </ul>
+        <div class="md:col-span-4">
+            <h4 class="font-display text-white text-sm tracking-wider uppercase mb-4">Informacije</h4>
+            <ul class="space-y-2 text-base">
+                <li><a href="{% url 'timeline' %}" class="hover:text-white transition">Istorijat</a></li>
+                <li><a href="{% url 'masters' %}" class="hover:text-white transition">Majstori</a></li>
+            </ul>
+            {% if config.contact_phone or config.email %}
+            <div class="mt-6 space-y-1 text-base text-stone-400">
+                {% if config.contact_phone %}
+                <p><a href="tel:{{ config.contact_phone }}" class="hover:text-white">{{ config.contact_phone }}</a></p>
+                {% endif %}
+                {% if config.email %}
+                <p><a href="mailto:{{ config.email }}" class="hover:text-white">{{ config.email }}</a></p>
+                {% endif %}
             </div>
-
+            {% endif %}
         </div>
     </div>
 
-    <!-- Divider -->
-    <div class="border-t border-gray-200"></div>
-
-    <!-- Social icons -->
-    <div class="py-6">
-        <div class="flex justify-center space-x-6 text-gray-500">
-            <a href="{{config.facebook_link}}" class="hover:text-blue-600" aria-label="Facebook">
-                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M22 12a10 10 0 10-11.5 9.95v-7.05h-2.2v-2.9h2.2V9.4c0-2.2 1.3-3.4 3.3-3.4.95 0 1.95.17 1.95.17v2.15h-1.1c-1.1 0-1.45.7-1.45 1.4v1.7h2.5l-.4 2.9h-2.1v7.05A10 10 0 0022 12z"/>
-                </svg>
-            </a>
-            <a href="{{config.instagram_link}}" class="hover:text-blue-600" aria-label="Instagram">
-                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm10 2c1.7 0 3 1.3 3 3v10c0 1.7-1.3 3-3 3H7c-1.7 0-3-1.3-3-3V7c0-1.7 1.3-3 3-3h10zm-5 3a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm4.5-.8a1.2 1.2 0 11-2.4 0 1.2 1.2 0 012.4 0z"/>
-                </svg>
-            </a>
-
+    <div class="border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p class="text-xs text-stone-500">© {% now "Y" %} Realni Aikido</p>
+            <div class="flex gap-5">
+                {% if config.facebook_link %}
+                <a href="{{ config.facebook_link }}" class="text-stone-400 hover:text-white transition" aria-label="Facebook" rel="noopener" target="_blank">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M22 12a10 10 0 10-11.5 9.95v-7.05h-2.2v-2.9h2.2V9.4c0-2.2 1.3-3.4 3.3-3.4.95 0 1.95.17 1.95.17v2.15h-1.1c-1.1 0-1.45.7-1.45 1.4v1.7h2.5l-.4 2.9h-2.1v7.05A10 10 0 0022 12z"/>
+                    </svg>
+                </a>
+                {% endif %}
+                {% if config.instagram_link %}
+                <a href="{{ config.instagram_link }}" class="text-stone-400 hover:text-white transition" aria-label="Instagram" rel="noopener" target="_blank">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm10 2c1.7 0 3 1.3 3 3v10c0 1.7-1.3 3-3 3H7c-1.7 0-3-1.3-3-3V7c0-1.7 1.3-3 3-3h10zm-5 3a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm4.5-.8a1.2 1.2 0 11-2.4 0 1.2 1.2 0 012.4 0z"/>
+                    </svg>
+                </a>
+                {% endif %}
+                {% if config.youtube_link %}
+                <a href="{{ config.youtube_link }}" class="text-stone-400 hover:text-white transition" aria-label="YouTube" rel="noopener" target="_blank">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 00.5 6.2 31.5 31.5 0 000 12a31.5 31.5 0 00.5 5.8 3 3 0 002.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 002.1-2.1A31.5 31.5 0 0024 12a31.5 31.5 0 00-.5-5.8zM9.8 15.5v-7l6.3 3.5-6.3 3.5z"/>
+                    </svg>
+                </a>
+                {% endif %}
+            </div>
         </div>
     </div>
 </footer>

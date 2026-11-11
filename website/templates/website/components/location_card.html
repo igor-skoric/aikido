@@ -1,0 +1,60 @@
+{% load static %}
+
+<article class="bg-white rounded-brand shadow-sm ring-1 ring-stone-200 p-4 sm:p-6 space-y-5 sm:space-y-6 reveal min-w-0">
+    <div class="text-center space-y-1">
+        <div class="flex items-center justify-center gap-2">
+            <img src="{% static 'img/icons/ix_location-filled.png' %}" alt="" class="w-7 h-7 sm:w-8 sm:h-8 object-contain" aria-hidden="true">
+            <h2 class="font-display text-xl sm:text-2xl text-brand-blue">{{ location.name }}</h2>
+        </div>
+        <p class="text-muted text-base break-words">{{ location.address }}</p>
+    </div>
+
+    {% if location.groups.all %}
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {% for group in location.groups.all %}
+        <div class="bg-stone-50 rounded-brand p-3 sm:p-4 space-y-2 ring-1 ring-stone-100">
+            <h3 class="text-brand-blue font-semibold text-sm sm:text-base">{{ group.label }}</h3>
+            <p class="text-sm text-muted flex items-start gap-2">
+                <img src="{% static 'img/icons/lets-icons_date-range-fill.png' %}" alt="" class="w-4 h-4 mt-0.5 shrink-0" aria-hidden="true">
+                <span>{{ group.days }}</span>
+            </p>
+            <p class="text-sm text-muted flex items-start gap-2">
+                <img src="{% static 'img/icons/carbon_time-filled.png' %}" alt="" class="w-4 h-4 mt-0.5 shrink-0" aria-hidden="true">
+                <span>{{ group.time_range }}</span>
+            </p>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {% if location.trainer_name %}
+        <div class="bg-stone-50 rounded-brand p-3 sm:p-4 ring-1 ring-stone-100">
+            <h3 class="text-brand-blue font-semibold mb-1 text-sm sm:text-base">Trener</h3>
+            <p class="text-ink">{{ location.trainer_name }}</p>
+            {% if location.trainer_belt %}
+            <p class="text-sm text-muted">{{ location.trainer_belt }}</p>
+            {% endif %}
+        </div>
+        {% endif %}
+        {% if location.phone %}
+        <div class="bg-stone-50 rounded-brand p-3 sm:p-4 ring-1 ring-stone-100">
+            <h3 class="text-brand-blue font-semibold mb-1 text-sm sm:text-base">Kontakt</h3>
+            <a href="tel:{{ location.phone }}" class="font-semibold text-ink underline underline-offset-2 hover:text-brand-blue break-all">
+                {{ location.phone }}
+            </a>
+        </div>
+        {% endif %}
+    </div>
+
+    {% if location.map_embed_url %}
+    <div class="rounded-brand overflow-hidden ring-1 ring-stone-200 -mx-1 sm:mx-0">
+        <iframe class="w-full h-48 sm:h-56"
+                src="{{ location.map_embed_url }}"
+                title="Mapa — {{ location.name }}"
+                allowfullscreen
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+    {% endif %}
+</article>

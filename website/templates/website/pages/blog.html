@@ -1,16 +1,119 @@
 {% extends 'base.html' %}
-
 {% load static %}
-{% block title %}Blog{% endblock %}
+{% block title %}Blog — Realni Aikido Vokić | Vesti i saveti iz dojoa{% endblock %}
+{% block meta_description %}Blog Realnog Aikidoa Vokić: vesti, seminari i saveti za početnike i napredne vežbače u Beogradu.{% endblock %}
+{% block og_title %}Blog — Realni Aikido Vokić{% endblock %}
+{% block og_description %}Vesti, seminari i saveti iz dojoa Realnog Aikidoa Vokić.{% endblock %}
 
 {% block content %}
+<section class="blog-page" aria-labelledby="blog-page-heading">
+    <div class="blog-page__container">
+        <header class="blog-page__intro reveal">
+            <nav aria-label="Breadcrumb" class="blog-page__crumbs">
+                <ol>
+                    <li>
+                        <a href="{% url 'home' %}">Početna</a>
+                    </li>
+                    <li aria-hidden="true">/</li>
+                    <li aria-current="page">Blog</li>
+                </ol>
+            </nav>
 
-<div class="max-w-5xl mx-auto px-5 mt-36 ">
-    {% include 'website/components/breadcrumbs.html' %}
-</div>
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-2 mx-auto max-w-5xl ">
-    {% include 'website/components/blog.html' with blog=blog %}
-</div>
+            <div class="blog-page__eyebrow">
+                <span class="blog-page__eyebrow-line" aria-hidden="true"></span>
+                <p>Blog Realnog Aikidoa</p>
+            </div>
 
+            <h1 id="blog-page-heading" class="blog-page__heading font-display">
+                Iz dojoa
+            </h1>
+            <p class="blog-page__lead font-body">
+                Vesti, seminari i priče iz dojoa.
+            </p>
+        </header>
+
+        <div class="blog-page__rule" aria-hidden="true"></div>
+
+        {% if blog_featured %}
+        <article class="blog-page__featured reveal">
+            {% if blog_featured.main_image %}
+            <a href="{% url 'post' blog_featured.slug %}"
+               class="blog-page__featured-media focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#CF1833]">
+                <img src="{{ blog_featured.main_image.url }}"
+                     alt=""
+                     width="880"
+                     height="560"
+                     loading="eager"
+                     decoding="async"
+                     class="blog-page__featured-img">
+            </a>
+            {% endif %}
+
+            <div class="blog-page__featured-copy">
+                <p class="blog-page__featured-label font-display">Izdvojena objava</p>
+                {% if blog_featured.date %}
+                <time class="blog-page__date font-body" datetime="{{ blog_featured.date|date:'Y-m-d' }}">
+                    {{ blog_featured.date|date:"d.m.Y." }}
+                </time>
+                {% endif %}
+                <h2 class="blog-page__featured-title font-display">
+                    <a href="{% url 'post' blog_featured.slug %}"
+                       class="blog-page__title-link focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#CF1833]">
+                        {{ blog_featured.title }}
+                    </a>
+                </h2>
+                <a href="{% url 'post' blog_featured.slug %}"
+                   class="blog-page__read-link">
+                    Pročitaj objavu&nbsp;→
+                </a>
+            </div>
+        </article>
+
+        {% if blog_rest %}
+        <section class="blog-page__rest" aria-labelledby="blog-rest-heading">
+            <h2 id="blog-rest-heading" class="blog-page__rest-heading font-display">
+                Sve objave
+            </h2>
+
+            <ul class="blog-page__grid reveal-stagger" role="list">
+                {% for post in blog_rest %}
+                <li class="reveal">
+                    <a href="{% url 'post' post.slug %}"
+                       class="blog-page__card focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#CF1833]">
+                        {% if post.main_image %}
+                        <div class="blog-page__card-media">
+                            <img src="{{ post.main_image.url }}"
+                                 alt=""
+                                 width="640"
+                                 height="420"
+                                 loading="lazy"
+                                 decoding="async"
+                                 class="blog-page__card-img">
+                        </div>
+                        {% endif %}
+                        <div class="blog-page__card-body">
+                            {% if post.date %}
+                            <time class="blog-page__date font-body" datetime="{{ post.date|date:'Y-m-d' }}">
+                                {{ post.date|date:"d.m.Y." }}
+                            </time>
+                            {% endif %}
+                            <h3 class="blog-page__card-title font-display">{{ post.title }}</h3>
+                            {% if post.description %}
+                            <p class="blog-page__card-excerpt font-body">
+                                {{ post.description|striptags|truncatechars:120 }}
+                            </p>
+                            {% endif %}
+                        </div>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </section>
+        {% endif %}
+
+        {% else %}
+        <p class="blog-page__empty font-body">Trenutno nema objava.</p>
+        {% endif %}
+    </div>
+</section>
 {% endblock %}
-

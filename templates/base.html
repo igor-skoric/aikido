@@ -1,41 +1,86 @@
 {% load static %}
 {% load static tailwind_tags %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{% block meta_description %}Realni Aikido Vokić — škole samoodbrane u Beogradu. Treninzi za decu i odrasle, lokacije širom grada.{% endblock %}">
+    <meta name="robots" content="{% block meta_robots %}index, follow{% endblock %}">
+    <title>{% block title %}Realni Aikido Vokić — Samoodbrana Beograd{% endblock %}</title>
+    <link rel="canonical" href="{% block canonical %}{{ request.build_absolute_uri }}{% endblock %}">
 
-    <title>Aikido</title>
+    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+    <meta property="og:locale" content="sr_RS">
+    <meta property="og:site_name" content="Realni Aikido Vokić">
+    <meta property="og:title" content="{% block og_title %}Realni Aikido Vokić — Samoodbrana Beograd{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Realni Aikido Vokić — škole samoodbrane u Beogradu. Treninzi za decu i odrasle.{% endblock %}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:image" content="{% block og_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'img/website/hero-desktop.webp' %}{% endblock %}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block twitter_title %}Realni Aikido Vokić — Samoodbrana Beograd{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}Realni Aikido Vokić — škole samoodbrane u Beogradu.{% endblock %}">
 
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <!-- Uključi Alpine.js u <head> ili pre zatvaranja </body> -->
-
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-          integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <!-- U head sekciji -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Cormorant+Garamond&family=Cinzel&family=Great+Vibes&display=swap"
-          rel="stylesheet">
-    <link href="{% static 'css/style.css' %}"
-          rel="stylesheet">
+    <link rel="icon" href="{% static 'img/website/favicon.ico' %}" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/website/favicon-32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/website/favicon-16.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'img/website/apple-touch-icon.png' %}">
+    <link rel="preload" href="{% static 'fonts/barlow-condensed/400-latin.woff2' %}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{% static 'fonts/barlow-condensed/400-latin-ext.woff2' %}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{% static 'fonts/barlow-condensed/700-latin.woff2' %}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{% static 'fonts/barlow-condensed/700-latin-ext.woff2' %}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{% static 'fonts/barlow-condensed/800-latin.woff2' %}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{% static 'fonts/barlow-condensed/800-latin-ext.woff2' %}" as="font" type="font/woff2" crossorigin>
+    <link href="{% static 'css/style.css' %}?v=23" rel="stylesheet">
     {% tailwind_css %}
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    {% block extra_head %}{% endblock %}
 </head>
+<body class="font-sans text-base text-ink antialiased bg-stone-100 overflow-x-hidden">
+    {% include 'header.html' %}
 
-<body class=" bg-cover bg-no-repeat bg-center bg-fixed" style="background-image: url('{% static 'img/website/bg.jpg' %}');">
+    <main id="main" class="min-w-0">
+        {% if messages %}
+        <div class="fixed top-20 inset-x-4 sm:inset-x-auto sm:right-4 z-[80] space-y-2 sm:max-w-sm">
+            {% for message in messages %}
+            <div class="rounded-lg px-4 py-3 shadow-lg text-sm
+                {% if message.tags == 'success' %}bg-brand-blue text-white
+                {% elif message.tags == 'error' %}bg-brand-red text-white
+                {% else %}bg-white text-ink{% endif %}"
+                 x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
 
+        {% block content %}{% endblock %}
+    </main>
 
-{% include 'header.html' %}
+    {% include 'footer.html' %}
 
-{% block content %}
-{% endblock %}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SportsActivityLocation",
+      "name": "Realni Aikido Vokić",
+      "description": "{{ config.about_blurb|escapejs }}",
+      "url": "{{ request.scheme }}://{{ request.get_host }}/",
+      "image": "{{ request.scheme }}://{{ request.get_host }}{% static 'img/website/logo.png' %}",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Beograd",
+        "addressCountry": "RS"{% if config.address %},
+        "streetAddress": "{{ config.address|escapejs }}"{% endif %}
+      }{% if config.contact_phone %},
+      "telephone": "{{ config.contact_phone|escapejs }}"{% endif %}{% if config.email %},
+      "email": "{{ config.email|escapejs }}"{% endif %}{% if config.facebook_link or config.instagram_link or config.youtube_link %},
+      "sameAs": [{% if config.facebook_link %}"{{ config.facebook_link }}"{% endif %}{% if config.facebook_link and config.instagram_link %}, {% endif %}{% if config.instagram_link %}"{{ config.instagram_link }}"{% endif %}{% if config.youtube_link %}{% if config.facebook_link or config.instagram_link %}, {% endif %}"{{ config.youtube_link }}"{% endif %}]{% endif %}
+    }
+    </script>
+    {% block structured_data %}{% endblock %}
 
-{% include 'footer.html' %}
-
-
+    <script src="{% static 'js/titleSubtitle.js' %}"></script>
+    {% block extra_js %}{% endblock %}
 </body>
 </html>
-
-<script src="{% static 'js/titleSubtitle.js' %}"></script>

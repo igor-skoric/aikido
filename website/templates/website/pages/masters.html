@@ -1,46 +1,50 @@
 {% extends 'base.html' %}
-
 {% load static %}
-{% block title %}Index Page{% endblock %}
+{% block title %}Majstori — Realni Aikido{% endblock %}
 
 {% block content %}
+<section class="masters-page" aria-labelledby="masters-page-heading">
+    <div class="masters-page__container">
+        <header class="masters-page__intro reveal">
+            <nav aria-label="Breadcrumb" class="masters-page__crumbs">
+                <ol>
+                    <li>
+                        <a href="{% url 'home' %}">Početna</a>
+                    </li>
+                    <li aria-hidden="true">/</li>
+                    <li aria-current="page">Majstori</li>
+                </ol>
+            </nav>
 
-<div class="max-w-5xl mx-auto px-5 mt-36 ">
-    {% include 'website/components/breadcrumbs.html' %}
-</div>
-<section class="max-w-5xl mx-auto px-2 ">
-    <div class="mb-2  bg-white rounded-2xl transition-transform duration-300 transform hover:-translate-y-1">
-        <div class="flex rounded-2xl shadow-xl">
-            <span class="rounded-l-2xl bg-red-600 w-20"></span>
-            <p class="text-center w-full p-5"> Aleksandar Petrovic</p>
-        </div>
-    </div>
-    <div class="mb-2  bg-white rounded-2xl transition-transform duration-300 transform hover:-translate-y-1">
-        <div class="flex rounded-2xl shadow-xl">
-            <span class="rounded-l-2xl bg-red-600 w-20"></span>
-            <p class="text-center w-full p-5"> Aleksandar Petrovic</p>
-        </div>
-    </div>
-    <div class="mb-2  bg-white rounded-2xl transition-transform duration-300 transform hover:-translate-y-1">
-        <div class="flex rounded-2xl shadow-xl">
-            <span class="rounded-l-2xl bg-red-600 w-20"></span>
-            <p class="text-center w-full p-5"> Aleksandar Petrovic</p>
-        </div>
-    </div>
-    <div class="mb-2  bg-white rounded-2xl transition-transform duration-300 transform hover:-translate-y-1">
-        <div class="flex rounded-2xl shadow-xl">
-            <span class="rounded-l-2xl bg-red-600 w-20"></span>
-            <p class="text-center w-full p-5"> Aleksandar Petrovic</p>
-        </div>
-    </div>
-    <div class="mb-2  bg-white rounded-2xl transition-transform duration-300 transform hover:-translate-y-1">
-        <div class="flex rounded-2xl shadow-xl">
-            <span class="rounded-l-2xl bg-red-600 w-20"></span>
-            <p class="text-center w-full p-5"> Aleksandar Petrovic</p>
-        </div>
+            <div class="masters-page__intro-main">
+                <div class="masters-page__intro-copy">
+                    <h1 id="masters-page-heading" class="masters-page__heading font-display">
+                        Naši majstori
+                    </h1>
+                    <span class="masters-page__accent" aria-hidden="true"></span>
+                </div>
+
+                <img src="{% static 'img/website/logo.png' %}"
+                     alt=""
+                     width="220"
+                     height="220"
+                     class="masters-page__crest"
+                     decoding="async"
+                     aria-hidden="true">
+            </div>
+        </header>
+
+        {% if masters %}
+        <ul class="masters-page__list reveal-stagger" role="list">
+            {% for master in masters %}
+            <li class="masters-page__item reveal">
+                <span class="masters-page__name font-display">{{ master.name }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="masters-page__empty font-body">Lista majstora uskoro.</p>
+        {% endif %}
     </div>
 </section>
-
-
 {% endblock %}
-

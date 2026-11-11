@@ -1,17 +1,73 @@
 {% extends 'base.html' %}
-
 {% load static %}
-{% block title %}Instruktori{% endblock %}
+{% block title %}Instruktori — Realni Aikido Vokić Beograd{% endblock %}
+{% block meta_description %}Upoznaj instruktore Realnog Aikidoa Vokić u Beogradu — iskustvo, rangovi i pristup treningu za decu i odrasle.{% endblock %}
+{% block og_title %}Instruktori — Realni Aikido Vokić{% endblock %}
+{% block og_description %}Tim instruktora Realnog Aikidoa Vokić koji vodi treninge širom Beograda.{% endblock %}
 
 {% block content %}
+<section class="instructors-page" aria-labelledby="instructors-page-heading">
+    <div class="instructors-page__container">
+        <header class="instructors-page__intro reveal">
+            <nav aria-label="Breadcrumb" class="instructors-page__crumbs">
+                <ol>
+                    <li>
+                        <a href="{% url 'home' %}">Početna</a>
+                    </li>
+                    <li aria-hidden="true">/</li>
+                    <li aria-current="page">Instruktori</li>
+                </ol>
+            </nav>
 
-<div class="max-w-5xl mx-auto px-5 mt-36 ">
-    {% include 'website/components/breadcrumbs.html' %}
-</div>
-<section class="max-w-5xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-2 mx-auto">
-    {% for instructor in instructors %}
-        {% include 'website/components/instructors.html' with instructor=instructor %}
-    {% endfor %}
+            <h1 id="instructors-page-heading" class="instructors-page__heading font-display">
+                Naši instruktori
+            </h1>
+            <p class="instructors-page__lead font-body">
+                Tim koji vodi treninge širom Beograda.
+            </p>
+        </header>
+
+        <div class="instructors-page__rule" aria-hidden="true"></div>
+
+        {% if instructors %}
+        <ul class="instructors-page__grid reveal-stagger" role="list">
+            {% for instructor in instructors %}
+            <li class="instructors-page__card reveal">
+                <a href="{% url 'instructor' instructor.slug %}"
+                   class="instructors-page__profile focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#CF1833]">
+                    <div class="instructors-page__photo">
+                        <img src="{{ instructor.photo.url }}"
+                             alt="{{ instructor.name }}"
+                             width="400"
+                             height="500"
+                             loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                             decoding="async"
+                             class="instructors-page__img{% if 'aleksandar' in instructor.slug %} instructors-page__img--aleksandar{% elif 'nikola' in instructor.slug %} instructors-page__img--nikola{% endif %}">
+                    </div>
+
+                    <div class="instructors-page__meta">
+                        <h2 class="instructors-page__name font-display">{{ instructor.name }}</h2>
+                        <p class="instructors-page__role font-body">{{ instructor.get_title_display }}</p>
+                        <span class="instructors-page__accent" aria-hidden="true"></span>
+                        <p class="instructors-page__rank font-body">{{ instructor.get_belt_rank_display }}</p>
+
+                        {% if instructor.description and "lorem ipsum" not in instructor.description|lower %}
+                        <p class="instructors-page__bio font-body">{{ instructor.description|striptags|truncatechars:180 }}</p>
+                        {% endif %}
+                    </div>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+
+        <div class="instructors-page__cta reveal">
+            <a href="{% url 'locations' %}" class="instructors-page__locations-link">
+                Pogledaj lokacije treninga&nbsp;→
+            </a>
+        </div>
+        {% else %}
+        <p class="instructors-page__empty font-body">Instruktori uskoro.</p>
+        {% endif %}
+    </div>
 </section>
 {% endblock %}
-
